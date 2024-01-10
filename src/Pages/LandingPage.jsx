@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  // Navigates to /register
+  const handleClickBtn = () => {
+    navigate("/register");
+  };
   return (
     <>
       <section className="w-screen center-vertical cursor-default">
@@ -9,7 +16,9 @@ const LandingPage = () => {
             <li className="font-semibold">&lt; 2D_Coders &gt;</li>
             <li className="text-sm font-extralight">presents</li>
             <span className="container-center my-4 gap-2">
-              <li className="text-6xl font-bold type-writer">NAME OF GAME</li>
+              <li className="text-6xl font-bold type-writer">
+                NAME OF GAME ????
+              </li>
               <li className="font-extralight">May the force be with you</li>
             </span>
           </ul>
@@ -33,7 +42,10 @@ const LandingPage = () => {
             </span>
           </ul>
 
-          <button className="bg-blue-500 text-white px-4 py-1.5 rounded-md my-4 hover:bg-blue-600 mt-8">
+          <button
+            onClick={handleClickBtn}
+            className="bg-blue-500 text-white px-4 py-1.5 rounded-md my-4 hover:bg-blue-600 mt-8"
+          >
             LETS DO THIS!
           </button>
         </div>

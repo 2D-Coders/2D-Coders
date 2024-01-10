@@ -22,22 +22,24 @@
         // Wait for the overlay element to be created
         const checkOverlayExistence = setInterval(() => {
           const overlay = document.querySelector(".overlay");
-
-          // If the overlay exists, stops the interval and adds the mousemove event listener
-          window.addEventListener("mousemove", (e) => {
-            const { clientX, clientY } = e;
-            const x = Math.round((clientX / window.innerWidth) * 100);
-            const y = Math.round((clientY / window.innerHeight) * 100);
-
-            // Moves the overlay
-            gsap.to(overlay, {
-              "--x": `${x}%`,
-              "--y": `${y}%`,
-              duration: 1,
-              ease: "ease.out",
+          // If the overlay exists, stop the interval
+          if (overlay) {
+            console.log("Overlay found:", overlay);
+            // If the overlay exists, stops the interval and adds the mousemove event listener
+            window.addEventListener("mousemove", (e) => {
+              const { clientX, clientY } = e;
+              const x = Math.round((clientX / window.innerWidth) * 100);
+              const y = Math.round((clientY / window.innerHeight) * 100);
+              // Moves the overlay
+              gsap.to(overlay, {
+                "--x": `${x}%`,
+                "--y": `${y}%`,
+                duration: 1,
+                ease: "sine.out",
+              });
             });
-          });
-          clearInterval(checkOverlayExistence);
+            clearInterval(checkOverlayExistence);
+          }
         }, 100);
       });
     </script>
