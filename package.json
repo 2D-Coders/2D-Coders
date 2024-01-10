@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "flush": "npx prisma db push --force-reset",
+    "seed": "npm run flush && node seed.cjs",
     "dev": "nodemon src/server/main.js -w src/server",
     "start": "NODE_ENV=production node src/server/main.js",
     "build": "vite build"
   },
   "dependencies": {
+    "@prisma/client": "^5.8.0",
     "@splinetool/react-spline": "^2.2.6",
     "@splinetool/runtime": "^1.0.23",
     "bcrypt": "^5.1.1",
