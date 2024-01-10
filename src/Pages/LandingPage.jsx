@@ -28,7 +28,7 @@ const LandingPage = () => {
       </section>
 
       <section className="overlay center-vertical text-black">
-        <div className=" container-center h-screen bg-gradient-to-t from-green-300 to-blue-400">
+        <div className=" container-center h-screen bg-gradient-to-t from-green-600 to-blue-400">
           <ul className="container-center gap-2 text-2xl">
             <li className="font-semibold">&lt; 2D_Coders &gt;</li>
             <li className="text-sm ">presents</li>
