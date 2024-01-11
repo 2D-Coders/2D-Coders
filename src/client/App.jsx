@@ -1,10 +1,13 @@
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "../Pages/LandingPage";
+import Register from "../Pages/Register";
+
 function App() {
   return (
-    <section className="w-screen">
-      <div className="flex justify-center items-center">
-        <h1>2D-Coders</h1>
-      </div>
-    </section>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
   );
 }
 
