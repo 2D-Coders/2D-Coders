@@ -1,7 +1,82 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  return <div>Login</div>;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [cantLogIn, setCantLogIn] = useState(false);
+
+  const wrongPasswordUsername = () => {
+    setCantLogIn(true);
+    setTimeout(() => {
+      setCantLogIn(false);
+    }, 5000);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("auth/login", {
+        username,
+        password,
+      });
+
+      console.log(response);
+
+      if (response.data && response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      } else {
+        wrongPasswordUsername();
+      }
+    } catch (error) {
+      // Handle the error, e.g., log it or display an error message
+      console.error("Error during login:", error);
+      wrongPasswordUsername();
+    }
+  };
+
+  return (
+    <>
+      <section className="w-screen h-screen center-vertical bg-black">
+        <div className="container-center  w-[60rem] h-[40rem] rounded-lg mx-auto">
+          <div className="container-center flex gap-4 my-4">
+            <h1>Log In</h1>
+            <p>Please enter your username, password</p>
+          </div>
+          <form className="text-white">
+            <input
+              className="py-1.5 px-4 rounded-md my-2"
+              type="text"
+              placeholder="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <br />
+            <input
+              className="py-1.5 px-4 rounded-md my-2"
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <br />
+          </form>
+          {cantLogIn && (
+            <p className="text-red-500 my-2">
+              Wrong username or password, please try again
+            </p>
+          )}
+          <button onClick={handleLogin} className="btn-white" type="submit">
+            Submit
+          </button>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Login;
