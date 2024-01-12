@@ -23,6 +23,8 @@ router.get("/:id", async (req, res) => {
   res.send(singleHighscore);
 });
 
+// WILL NEED TO WORK ON THIS
+// ===============================================================
 // POST /api/highscores
 // router.post("/", async (req, res) => {
 //   const { score, userId } = req.body;

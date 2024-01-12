@@ -18,6 +18,10 @@ router.post("/login", async (req, res) => {
       },
     });
 
+    if (!user) {
+      return res.status(401).send("User not found"); // or handle accordingly
+    }
+
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
@@ -31,6 +35,7 @@ router.post("/login", async (req, res) => {
     res.status(200).send({ message: "User logged in", token });
   } catch (error) {
     console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
