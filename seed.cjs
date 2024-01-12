@@ -1,12 +1,44 @@
 const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
 
+const users = [
+  {
+    username: "demo",
+    password: "123",
+    email: "demo@gmail.com",
+  },
+  {
+    username: "Bob",
+    password: "123",
+    email: "bob@gmail.com",
+  },
+  {
+    username: "Dave",
+    password: "123",
+    email: "dave@gmail.com",
+  },
+  {
+    username: "Alice",
+    password: "123",
+    email: "alice@gmail.com",
+  },
+];
+
 async function main() {
+  const demo = await prisma.user.create({
+    data: {
+      username: "demo",
+      password: await bcrypt.hash("123", 5),
+      email: "demo@gmail.com",
+    },
+  });
+
   const bob = await prisma.user.create({
     data: {
       username: "Bob",
-      password: "123",
+      password: await bcrypt.hash("123", 5),
       email: "bob@gmail.com",
     },
   });
@@ -14,7 +46,7 @@ async function main() {
   const dave = await prisma.user.create({
     data: {
       username: "Dave",
-      password: "123",
+      password: await bcrypt.hash("123", 5),
       email: "dave@gmail.com",
     },
   });
@@ -22,7 +54,7 @@ async function main() {
   const alice = await prisma.user.create({
     data: {
       username: "Alice",
-      password: "123456",
+      password: await bcrypt.hash("123", 5),
       email: "alice@gmail.com",
     },
   });

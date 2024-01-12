@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -29,15 +30,15 @@ const Register = () => {
 
   return (
     <>
-      <section className="w-screen h-screen center-vertical bg-black">
-        <div className="container-center  w-[60rem] h-[40rem] rounded-lg mx-auto">
+      <section className="w-screen h-screen center-vertical bg-gray-50">
+        <div className="container-center  w-[60rem] h-[40rem] rounded-lg mx-auto text-black">
           <div className="container-center flex gap-4 my-4">
             <h1>Register</h1>
             <p>Please enter a username, password, and email</p>
           </div>
           <form className="text-white">
             <input
-              className="py-1.5 px-4 rounded-md my-2"
+              className="py-1.5 px-4 rounded-md my-2 focus:shadow-lg focus:shadow-gray-400 focus:outline-1"
               type="text"
               placeholder="username"
               value={username}
@@ -60,17 +61,25 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </form>
-          <button onClick={handleRegister} className="btn-white" type="submit">
+          <button
+            onClick={handleRegister}
+            className="btn-wht2blk-outline"
+            type="submit"
+          >
             Submit
           </button>
           <p>
             Already have an account,
             <span>
-              <a href="/login"> click here </a>
+              <a className="font-bold" href="/login">
+                {" "}
+                click here{" "}
+              </a>
             </span>
             to login
           </p>
         </div>
+        <BackButton />
       </section>
     </>
   );

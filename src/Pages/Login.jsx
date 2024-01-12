@@ -1,10 +1,13 @@
 import axios from "axios";
+import { ArrowLeftCircle } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import BackButton from "../components/BackButton";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("demo");
+  const [password, setPassword] = useState("123");
   const navigate = useNavigate();
   const [cantLogIn, setCantLogIn] = useState(false);
 
@@ -41,11 +44,11 @@ const Login = () => {
 
   return (
     <>
-      <section className="w-screen h-screen center-vertical bg-black">
-        <div className="container-center  w-[60rem] h-[40rem] rounded-lg mx-auto">
+      <section className="w-screen h-screen center-vertical bg-gray-50">
+        <div className="text-black container-center  w-[60rem] h-[40rem] rounded-lg mx-auto">
           <div className="container-center flex gap-4 my-4">
             <h1>Log In</h1>
-            <p>Please enter your username, password</p>
+            <p>Please enter your username and password</p>
           </div>
           <form className="text-white">
             <input
@@ -66,14 +69,19 @@ const Login = () => {
             <br />
           </form>
           {cantLogIn && (
-            <p className="text-red-500 my-2">
+            <p className=" my-2">
               Wrong username or password, please try again
             </p>
           )}
-          <button onClick={handleLogin} className="btn-white" type="submit">
+          <button
+            onClick={handleLogin}
+            className="btn-wht2blk-outline"
+            type="submit"
+          >
             Submit
           </button>
         </div>
+        <BackButton />
       </section>
     </>
   );

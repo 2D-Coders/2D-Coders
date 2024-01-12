@@ -24,6 +24,7 @@
 body {
   background-color: black;
   margin: 0;
+  padding: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -51,6 +52,15 @@ body {
   .btn-blue {
     @apply bg-white text-black px-4 py-1.5 rounded-md my-4;
   }
+
+  .btn-wht2blk-outline {
+    @apply bg-gray-100 text-black px-4 py-1.5 rounded-md my-4 hover:ring-2 hover:ring-black font-bold hover:font-semibold
+    hover:shadow-lg hover:shadow-gray-400;
+  }
+
+  input {
+    @apply py-1.5 px-4 rounded-md my-2 hover:shadow-lg hover:shadow-gray-400 focus:shadow-lg focus:shadow-gray-400 focus:outline-1;
+  }
 }
 
 h1 {
@@ -61,6 +71,12 @@ h1 {
 a {
   color: #e77000;
   font-weight: 600;
+}
+
+a:hover {
+  color: #e77000;
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
 }
 
 .overlay {
