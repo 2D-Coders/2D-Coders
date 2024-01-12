@@ -1,9 +1,12 @@
 body {
   font-family:'Courier New', Courier, monospace;
   text-align: center;
+  background-image: url("./flappyBirdBackGround.webp");
+  
 }
 
 #board {
-  /* background-color: skyblue; */
   background-image: url("./flappybirdbg.png");
+  border: 5px solid #000; /* Set the border width and color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
