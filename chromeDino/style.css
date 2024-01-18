@@ -1,0 +1,10 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  background-image: url(./img/cdbg.jpeg);
+}
+
+#board {
+  background-color: lightgray;
+  border-bottom: 1px solid black;
+}
