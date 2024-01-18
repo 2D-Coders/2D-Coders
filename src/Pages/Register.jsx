@@ -30,7 +30,7 @@ const Register = () => {
 
   return (
     <>
-      <section className="w-screen h-screen center-vertical bg-gray-50">
+      <section className="w-screen h-screen center-vertical">
         <div className="container-center  w-[60rem] h-[40rem] rounded-lg mx-auto text-black">
           <div className="container-center flex gap-4 my-4">
             <h1>Register</h1>

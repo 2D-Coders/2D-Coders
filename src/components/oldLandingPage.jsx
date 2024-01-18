@@ -1,6 +1,9 @@
 import React from "react";
 
-const oldLandingPage = () => {
+const OldLandingPage = () => {
+  const handleClickBtn = () => {
+    console.log("click");
+  };
   return (
     <>
       <section className="w-screen center-vertical cursor-default ">
@@ -47,4 +50,4 @@ const oldLandingPage = () => {
   );
 };
 
-export default oldLandingPage;
+export default OldLandingPage;
