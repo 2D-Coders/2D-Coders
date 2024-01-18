@@ -2,9 +2,11 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <>
+      <div className="w-screen h-screen flex justify-center items-center text-black text-6xl">
+        Home
+      </div>
+    </>
   );
 };
 
