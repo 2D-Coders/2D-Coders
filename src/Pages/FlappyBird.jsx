@@ -167,7 +167,7 @@ function detectCollision(a, b) {
 }
 
 return (
-  <div>
+  <div className="container-center center-vertical w-screen h-screen" id="flappyBg">
     <h1>Flappy Bird</h1>
         <canvas id="board" style={{ border: "1px solid #000", display: "block", margin: "0 auto" }}
         tabIndex="0"></canvas>
