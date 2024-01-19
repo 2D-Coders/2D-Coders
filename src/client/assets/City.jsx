@@ -6,7 +6,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function City(props) {
-  const { nodes, materials } = useGLTF("/models/City.gltf");
+  const { nodes, materials } = useGLTF("../../../public/models/City.gltf");
   return (
     <group {...props} dispose={null}>
       <group position={[0.482, -0.313, 1.564]}>
@@ -316,57 +316,9 @@ export function City(props) {
           geometry={nodes.Plane046_50.geometry}
           material={materials["Material.029"]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_51.geometry}
-          material={materials["Material.038"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_52.geometry}
-          material={materials["Material.039"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_53.geometry}
-          material={materials["Material.036"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_54.geometry}
-          material={materials["Material.037"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_55.geometry}
-          material={materials["Material.057"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_56.geometry}
-          material={materials["Material.059"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_57.geometry}
-          material={materials["Material.055"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046_58.geometry}
-          material={materials["Material.058"]}
-        />
       </group>
     </group>
   );
 }
 
-useGLTF.preload("/models/City.gltf");
+useGLTF.preload("../../../public/models/City.gltf");

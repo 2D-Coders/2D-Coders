@@ -30,7 +30,7 @@ const Register = () => {
 
   return (
     <>
-      <section className="w-screen h-screen center-vertical">
+      <section>
         <div className="container-center  w-[60rem] h-[40rem] rounded-lg mx-auto text-black">
           <div className="container-center flex gap-4 my-4">
             <h1>Register</h1>
@@ -72,8 +72,7 @@ const Register = () => {
             Already have an account,
             <span>
               <a className="font-bold" href="/login">
-                {" "}
-                click here{" "}
+                click here
               </a>
             </span>
             to login
