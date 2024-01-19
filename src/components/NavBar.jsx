@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <div className="w-screen h-screen  absolute z-30 text-black">
-      <nav className="top-0 flex justify-between px-20 py-10">
-        <h1>GameZone</h1>
+    <div className="text-black">
+      <nav className="flex justify-between px-20 py-4 items-center">
+        <h2>GameZone</h2>
         <ul className="flex gap-6">
-          <Link to="/home">
+          <Link to="/doodle">
             <div>1</div>
           </Link>
           <div>1</div>

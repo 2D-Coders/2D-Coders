@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "../../doodleJump/style.css";
 
 const DoodleJumpGame = () => {
@@ -243,7 +244,10 @@ const DoodleJumpGame = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div
+      className="w-screen h-screen flex justify-center items-center doodleBG
+    "
+    >
       <canvas
         id="board"
         style={{ border: "1px solid #000", display: "block", margin: "0 auto" }}
