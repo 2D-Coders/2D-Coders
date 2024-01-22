@@ -8,7 +8,7 @@ const BackButton = () => {
   return (
     <ArrowLeftCircle
       onClick={handleBackBtn}
-      className="absolute z-50 left-8 top-8 text-black  hover:text-orange-600 cursor-pointer"
+      className="absolute z-50 left-8 top-20 text-black  hover:text-orange-600 cursor-pointer"
     />
   );
 };

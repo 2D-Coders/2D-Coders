@@ -15,7 +15,9 @@ const CityScene = () => {
 
   // move car and camera along the x-axis on scroll
   const handleMouseScroll = (e) => {
-    let sensitivity = 0.01;
+    let sensitivity = 0.02;
+    let currentPosition = position[0] + e.deltaY;
+
     // Update the car's position based on the mouse scroll
     setPosition([
       position[0] + e.deltaY * sensitivity,
@@ -30,6 +32,15 @@ const CityScene = () => {
       setPosition(defaultPosition);
       return;
     }
+
+    if (currentPosition < 0) {
+      // reset car position
+      setPosition(defaultPosition);
+      setTraffic(trafficDefaultPosition);
+
+      return;
+    }
+
     if (traffic[0] < -26) {
       // reset traffic position
       setTraffic(trafficDefaultPosition);
@@ -53,10 +64,14 @@ const CityScene = () => {
         <PerspectiveCamera makeDefault position={[0, -1, 10]} fov={56} />
         <directionalLight
           intensity={6}
+          // intensity={0.4}
           position={[8, 20, 16]}
           rotation={[Math.PI / 4, 0, 0]}
         />
-        <ambientLight intensity={1} />
+        <ambientLight
+          intensity={1}
+          // intensity={0.15}
+        />
 
         <CarModel
           position={position}

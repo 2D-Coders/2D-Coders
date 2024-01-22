@@ -1,16 +1,13 @@
-body {
-  text-align: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-#board {
-  background-image: url(doodlejumpbg.png);
+#doodleboard {
+  background-image: url(../doodleJump/doodlejumpbg.png);
   border: 5px solid #000; /* Set the border width and color */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .doodleBG {
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   background-image: url(../doodleJump/djBg.jpeg);
 }
