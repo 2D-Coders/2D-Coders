@@ -41,7 +41,7 @@ const DoodleJumpGame = () => {
   let gameOver = false;
 
   window.onload = function () {
-    board = document.getElementById("board");
+    board = document.getElementById("doodleboard");
     board.height = boardHeight;
     board.width = boardWidth;
     context = board.getContext("2d"); //used for drawing on the board
@@ -245,11 +245,11 @@ const DoodleJumpGame = () => {
 
   return (
     <div
-      className="w-screen h-screen flex justify-center items-center doodleBG
+      className="w-full h-full rounded-xl flex justify-center items-center doodleBG
     "
     >
       <canvas
-        id="board"
+        id="doodleboard"
         style={{ border: "1px solid #000", display: "block", margin: "0 auto" }}
         tabIndex="0"
       ></canvas>
