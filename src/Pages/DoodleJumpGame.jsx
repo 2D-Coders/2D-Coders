@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "../../doodleJump/style.css";
+import axios from "axios";
 
 const DoodleJumpGame = () => {
   //board
@@ -76,7 +77,21 @@ const DoodleJumpGame = () => {
   function update() {
     requestAnimationFrame(update);
     if (gameOver) {
-      return;
+      // Make a POST request to save the highscore
+      axios.post('/api/highscores', {
+        score: score,
+        userId,
+        gameId
+      })
+      .then(response => {
+        console.log('Highscore saved successfully');
+      })
+      .catch(error => {
+        console.error('Error saving highscore:', error);
+      });
+  
+      context.clearRect(0, 0, board.width, board.height);
+
     }
     context.clearRect(0, 0, board.width, board.height);
     //doodler
