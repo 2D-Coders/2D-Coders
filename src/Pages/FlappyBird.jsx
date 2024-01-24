@@ -1,7 +1,16 @@
 import "../../flappyBird/style.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import BackDropImg from "../components/BackDropImg";
+import CloseBtn from "../components/CloseBtn";
+import NavBar from "../components/NavBar";
 
 const FlappyBird = () => {
+  const [gameStarted, setGameStarted] = useState(false);
+
+  const startGame = () => {
+    setGameStarted(true);
+  };
+
   //board
   let board;
   let boardWidth = 360;
@@ -41,29 +50,32 @@ const FlappyBird = () => {
   let score = 0;
 
   useEffect(() => {
-    // window.onload = function () {
-    board = document.getElementById("flappyBoard");
-    board.height = boardHeight;
-    board.width = boardWidth;
-    context = board.getContext("2d"); //used for drawing on the board
+    if (gameStarted) {
+      // window.onload = function () {
+      board = document.getElementById("flappyBoard");
+      board.height = boardHeight;
+      board.width = boardWidth;
+      context = board.getContext("2d"); //used for drawing on the board
 
-    //load images
-    birdImg = new Image();
-    birdImg.src = "../../flappyBird/flappybird.png";
-    birdImg.onload = function () {
-      context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
-    };
+      //load images
+      birdImg = new Image();
+      birdImg.src = "../../flappyBird/flappybird.png";
+      birdImg.onload = function () {
+        context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+      };
 
-    topPipeImg = new Image();
-    topPipeImg.src = "../../flappyBird/toppipe.png";
+      topPipeImg = new Image();
+      topPipeImg.src = "../../flappyBird/toppipe.png";
 
-    bottomPipeImg = new Image();
-    bottomPipeImg.src = "../../flappyBird/bottompipe.png";
+      bottomPipeImg = new Image();
+      bottomPipeImg.src = "../../flappyBird/bottompipe.png";
 
-    requestAnimationFrame(update);
-    setInterval(placePipes, 1500); //every 1.5 seconds
-    document.addEventListener("keydown", moveBird);
-  }, []);
+      requestAnimationFrame(update);
+      setInterval(placePipes, 1500);
+      document.addEventListener("keydown", moveBird);
+    }
+    console.log("gameStarted", gameStarted);
+  }, [gameStarted]);
 
   function update() {
     requestAnimationFrame(update);
@@ -170,18 +182,46 @@ const FlappyBird = () => {
   }
 
   return (
-    <div
-      className="w-full h-full rounded-xl container-center center-vertical "
-      id="flappyBg"
-    >
-      <h1>Flappy Bird</h1>
-      <canvas
-        id="flappyBoard"
-        style={{ border: "1px solid #000", display: "block", margin: "0 auto" }}
-        tabIndex="0"
-      ></canvas>
-      <h3> jump = space || x || up</h3>
-    </div>
+    <section className="container-center center-vertical w-screen h-screen">
+      <NavBar />
+      <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Flappy Bird</h1>
+
+      <div className="m-8 relative px-12 py-28 rounded-lg" id="flappyBg">
+        <div className="flex items-center gap-20">
+          <div className="bg-black w-96 h-96 p-6 rounded-lg">
+            <h1 className="mb-2">How To Play</h1>
+            <hr />
+            <br />
+            <ul className="leading-loose text-left">
+              <li>Press Spacebar to jump</li>
+              <li>Don't hit the pipes</li>
+              <li>Don't fall off the screen</li>
+              <li>Get the highest score!</li>
+            </ul>
+          </div>
+          <canvas
+            id="flappyBoard"
+            style={{
+              border: "1px solid #000",
+              display: "block",
+              margin: "0 auto",
+            }}
+            tabIndex="0"
+          ></canvas>
+          <div className="bg-black w-96 h-96 p-6 rounded-lg">
+            <h1 className="mb-2">Highscores</h1>
+            <hr />
+            <br />
+          </div>
+          <CloseBtn />
+        </div>
+      </div>
+      <button onClick={startGame} className="btn-white animate-bounce text-2xl">
+        PLAY
+      </button>
+
+      <BackDropImg />
+    </section>
   );
 };
 

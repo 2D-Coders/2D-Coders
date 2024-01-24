@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import "../../doodleJump/style.css";
+import CloseBtn from "../components/CloseBtn";
+import BackDropImg from "../components/BackDropImg";
+import NavBar from "../components/NavBar";
 
 const DoodleJumpGame = () => {
+  const [gameStarted, setGameStarted] = useState(false);
+
+  const startGame = () => {
+    setGameStarted(true);
+  };
   //board
   let board;
   let boardWidth = 360;
@@ -41,37 +49,40 @@ const DoodleJumpGame = () => {
   let gameOver = false;
 
   useEffect(() => {
-    board = document.getElementById("doodleboard");
-    board.height = boardHeight;
-    board.width = boardWidth;
-    context = board.getContext("2d"); //used for drawing on the board
+    if (gameStarted) {
+      board = document.getElementById("doodleboard");
+      board.height = boardHeight;
+      board.width = boardWidth;
+      context = board.getContext("2d"); //used for drawing on the board
 
-    //draw doodler
-    //load images
-    doodlerRightImg = new Image();
-    doodlerRightImg.src = "../../doodleJump/doodler-right.png";
-    doodler.img = doodlerRightImg;
-    doodlerRightImg.onload = function () {
-      context.drawImage(
-        doodler.img,
-        doodler.x,
-        doodler.y,
-        doodler.width,
-        doodler.height
-      );
-    };
+      //draw doodler
+      //load images
+      doodlerRightImg = new Image();
+      doodlerRightImg.src = "../../doodleJump/doodler-right.png";
+      doodler.img = doodlerRightImg;
+      doodlerRightImg.onload = function () {
+        context.drawImage(
+          doodler.img,
+          doodler.x,
+          doodler.y,
+          doodler.width,
+          doodler.height
+        );
+      };
 
-    doodlerLeftImg = new Image();
-    doodlerLeftImg.src = "../../doodleJump/doodler-left.png";
+      doodlerLeftImg = new Image();
+      doodlerLeftImg.src = "../../doodleJump/doodler-left.png";
 
-    platformImg = new Image();
-    platformImg.src = "../../doodleJump/platform.png";
+      platformImg = new Image();
+      platformImg.src = "../../doodleJump/platform.png";
 
-    velocityY = intialVelocityY;
-    placePlatform();
-    requestAnimationFrame(update);
-    document.addEventListener("keydown", moveDoodler);
-  }, []);
+      velocityY = intialVelocityY;
+      placePlatform();
+      requestAnimationFrame(update);
+      document.addEventListener("keydown", moveDoodler);
+    }
+    console.log("gameStarted", gameStarted);
+  }, [gameStarted]);
 
   function update() {
     requestAnimationFrame(update);
@@ -244,16 +255,45 @@ const DoodleJumpGame = () => {
   }
 
   return (
-    <div
-      className="w-full h-full rounded-xl flex justify-center items-center doodleBG
-    "
-    >
-      <canvas
-        id="doodleboard"
-        style={{ border: "1px solid #000", display: "block", margin: "0 auto" }}
-        tabIndex="0"
-      ></canvas>
-    </div>
+    <section className="container-center center-vertical w-screen h-screen">
+      <NavBar />
+      <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
+      <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
+        <div className="flex items-center gap-20">
+          <div className="bg-black w-96 h-96 p-6 rounded-lg">
+            <h1 className="mb-2">How To Play</h1>
+            <hr />
+            <br />
+            <ul className="leading-loose text-left">
+              <li> To jump, press spacebar</li>
+              <li>Use arrow keys to move player left and right</li>
+              <li>Jump on platforms to gain points</li>
+              <li>Don't fall off the screen</li>
+            </ul>
+          </div>
+          <canvas
+            id="doodleboard"
+            style={{
+              border: "1px solid #000",
+              display: "block",
+              margin: "0 auto",
+            }}
+            tabIndex="0"
+          ></canvas>
+          <div className="bg-black w-96 h-96 p-6 rounded-lg">
+            <h1 className="mb-2">Highscores</h1>
+            <hr />
+            <br />
+          </div>
+          <CloseBtn />
+        </div>
+      </div>
+      <button onClick={startGame} className="btn-white animate-bounce text-2xl">
+        PLAY
+      </button>
+
+      <BackDropImg />
+    </section>
   );
 };
 

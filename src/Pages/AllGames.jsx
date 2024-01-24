@@ -7,7 +7,7 @@ const AllGames = () => {
       <section className="w-screen flex justify-center items-center mt-[200rem] mb-28">
         <div
           id="flappyBg"
-          className="w-[1000px] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
+          className="w-[1000px] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center "
         >
           <Link to="/flappyBird">
             <div className="left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
@@ -38,7 +38,6 @@ const AllGames = () => {
           </Link>
         </div>
 
-        <div className="w-[1000px] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"></div>
         <ScrollToTop />
       </section>
     </>

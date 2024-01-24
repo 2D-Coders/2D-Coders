@@ -9,7 +9,7 @@ const NavBar = () => {
     navigate("/");
   };
   return (
-    <div className="text-black">
+    <div className="top-0 w-screen fixed z-[600]  bg-white bg-opacity-80 text-black">
       <nav className="flex justify-between px-20 py-4 items-center">
         <h2>GameZone</h2>
         <ul className="flex gap-6 items-center">
