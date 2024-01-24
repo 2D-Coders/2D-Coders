@@ -1,4 +1,4 @@
-import CitySceneBG from "../components/CitySceneBG";
+import BackDropImg from "../components/BackDropImg";
 import Register from "./Register";
 
 const Home = () => {
@@ -7,9 +7,7 @@ const Home = () => {
       <div className="flex flex-col w-screen h-fit">
         <Register />
       </div>
-      <div className="absolute -z-20 blur-lg">
-        <CitySceneBG />
-      </div>
+      <BackDropImg />
     </div>
   );
 };
