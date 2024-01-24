@@ -1,5 +1,5 @@
 #chromeDino {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   text-align: center;
   background-image: url(./img/cdbg.jpeg);
 }
@@ -7,4 +7,6 @@
 #chromeBoard {
   background-color: lightgray;
   border-bottom: 1px solid black;
+  width: 750px;
+  height: 250px;
 }
