@@ -2,12 +2,15 @@
   background-image: url(../doodleJump/doodlejumpbg.png);
   border: 5px solid #000; /* Set the border width and color */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  width: 360px;
+  height: 576px;
 }
 
-.doodleBG {
+#doodleBG {
   text-align: center;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center; */
   background-image: url(../doodleJump/djBg.jpeg);
 }

@@ -31,7 +31,7 @@ const Login = () => {
       if (response.data && response.data.token) {
         localStorage.setItem("token", response.data.token);
         setSuccesLogIn(true);
-        navigate("/Home");
+        navigate("/experience");
       } else {
         wrongPasswordUsername();
       }

@@ -27,12 +27,13 @@ router.get("/:id", async (req, res) => {
 // ===============================================================
 // POST /api/highscores
 // router.post("/", async (req, res) => {
-//   const { score, userId } = req.body;
+//   const { score, userId, gameId } = req.body;
 //   try {
 //     const newHighscore = await prisma.highscore.create({
 //       data: {
 //         score,
 //         userId,
+//         gameId,
 //       },
 //     });
 //     res.send(newHighscore);

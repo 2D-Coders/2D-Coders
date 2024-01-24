@@ -7,7 +7,7 @@ const Home = () => {
       <div className="flex flex-col w-screen h-fit">
         <Register />
       </div>
-      <div className="absolute -z-20">
+      <div className="absolute -z-20 blur-lg">
         <CitySceneBG />
       </div>
     </div>

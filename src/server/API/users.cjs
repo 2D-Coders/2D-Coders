@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("../client.cjs");
+const jwt = require("jsonwebtoken");
 
 // GET /api/users
 router.get("/", async (req, res) => {
@@ -9,6 +10,32 @@ router.get("/", async (req, res) => {
     res.send(getUsers);
   } catch (error) {
     console.error(error);
+  }
+});
+
+// GET /api/users/me
+router.get("/me", async (req, res, next) => {
+  const bearer = req.headers.authorization;
+
+  if (!bearer) {
+    res.send({ user: "notLoggedIn" });
+    return;
+  }
+
+  const [, token] = bearer.split(" ");
+
+  if (!token) {
+    res.send({ user: "notLoggedIn" });
+    return;
+  }
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    res.send(user);
+  } catch (error) {
+    res.send({ message: "Invalid Token", user: "notLoggedIn" });
+    return;
   }
 });
 
