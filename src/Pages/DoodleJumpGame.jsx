@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../../doodleJump/style.css";
 
 const DoodleJumpGame = () => {
@@ -40,7 +40,7 @@ const DoodleJumpGame = () => {
   let maxScore = 0;
   let gameOver = false;
 
-  window.onload = function () {
+  useEffect(() => {
     board = document.getElementById("doodleboard");
     board.height = boardHeight;
     board.width = boardWidth;
@@ -71,7 +71,7 @@ const DoodleJumpGame = () => {
     placePlatform();
     requestAnimationFrame(update);
     document.addEventListener("keydown", moveDoodler);
-  };
+  }, []);
 
   function update() {
     requestAnimationFrame(update);

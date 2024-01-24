@@ -9,7 +9,7 @@ const ScrollToBegin = () => {
   });
 
   return (
-    <div className="font-semiboldbold scroll-down">
+    <div className="font-semiboldbold scroll-down text-center animate-bounce">
       <h1 className="text-6xl mb-4">WELCOME</h1>
       <p>SCROLL TO BEGIN</p>
     </div>

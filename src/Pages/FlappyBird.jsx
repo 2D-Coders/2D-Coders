@@ -1,4 +1,5 @@
 import "../../flappyBird/style.css";
+import { useEffect } from "react";
 
 const FlappyBird = () => {
   //board
@@ -39,7 +40,8 @@ const FlappyBird = () => {
   let gameOver = false;
   let score = 0;
 
-  window.onload = function () {
+  useEffect(() => {
+    // window.onload = function () {
     board = document.getElementById("flappyBoard");
     board.height = boardHeight;
     board.width = boardWidth;
@@ -61,7 +63,7 @@ const FlappyBird = () => {
     requestAnimationFrame(update);
     setInterval(placePipes, 1500); //every 1.5 seconds
     document.addEventListener("keydown", moveBird);
-  };
+  }, []);
 
   function update() {
     requestAnimationFrame(update);
