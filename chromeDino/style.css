@@ -1,10 +1,10 @@
-body {
+#chromeDino {
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
   background-image: url(./img/cdbg.jpeg);
 }
 
-#board {
+#chromeBoard {
   background-color: lightgray;
   border-bottom: 1px solid black;
 }
