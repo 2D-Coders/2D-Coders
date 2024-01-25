@@ -3,13 +3,47 @@ import { useEffect, useState } from "react";
 import BackDropImg from "../components/BackDropImg";
 import CloseBtn from "../components/CloseBtn";
 import NavBar from "../components/NavBar";
+import axios from "axios";
 
 const FlappyBird = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [highscores, setHighscores] = useState([]);
+  const [users, setUsers] = useState(null);
+  const [singleUser, setSingleUser] = useState(null);
+
+  useEffect(() => {
+    const getHighscores = async () => {
+      try {
+        const response = await axios.get("/api/highscores");
+        setHighscores(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching highscores:", error);
+      }
+    };
+    getHighscores();
+  }, []);
 
   const startGame = () => {
     setGameStarted(true);
   };
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const { data: usersData } = await axios.get("/api/users");
+        setUsers(usersData);
+        // console.log(usersData);
+        users.map((user) => {
+          setSingleUser(user.id);
+          console.log("userId: ", user.id);
+        });
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    getUsers();
+  }, []);
 
   //board
   let board;
@@ -74,7 +108,7 @@ const FlappyBird = () => {
       setInterval(placePipes, 1500);
       document.addEventListener("keydown", moveBird);
     }
-    console.log("gameStarted", gameStarted);
+    // console.log("gameStarted", gameStarted);
   }, [gameStarted]);
 
   function update() {
@@ -212,6 +246,22 @@ const FlappyBird = () => {
             <h1 className="mb-2">Highscores</h1>
             <hr />
             <br />
+            <div>
+              <section>
+                {highscores.map((highscore) => (
+                  <div className="flex gap-8 justify-center" key={highscore.id}>
+                    <h3 className="text-white">
+                      {highscore.gameId === 1 &&
+                      highscore.userId === singleUser ? (
+                        <>{singleUser.username}</>
+                      ) : null}
+                    </h3>
+                    <br />
+                    {highscore.gameId === 1 ? <h1>{highscore.score}</h1> : null}
+                  </div>
+                ))}
+              </section>
+            </div>
           </div>
           <CloseBtn />
         </div>

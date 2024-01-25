@@ -11,13 +11,12 @@ const NavBar = () => {
   return (
     <div className="top-0 w-screen fixed z-[600]  bg-white bg-opacity-80 text-black">
       <nav className="flex justify-between px-20 py-4 items-center">
-        <h2>GameZone</h2>
+        <Link to={"/experience"}>
+          <h2> GameZone</h2>
+        </Link>
         <ul className="flex gap-6 items-center">
           <li>
-            <a href="#">Highscores</a>
-          </li>
-          <li>
-            <a href="#">Account</a>
+            <a href="/account">Account</a>
           </li>
 
           <button

@@ -3,9 +3,22 @@ import "../../doodleJump/style.css";
 import CloseBtn from "../components/CloseBtn";
 import BackDropImg from "../components/BackDropImg";
 import NavBar from "../components/NavBar";
+import axios from "axios";
 
-const DoodleJumpGame = () => {
+const DoodleJumpGame = ({ user }) => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [highscores, setHighscores] = useState([]);
+  // const [currentScore, setCurrentScore] = useState(0);
+  // console.log("currentScore:", currentScore);
+
+  useEffect(() => {
+    const getHighscores = async () => {
+      const response = await axios.get("/api/highscores");
+      setHighscores(response.data);
+      // console.log(response.data);
+    };
+    getHighscores();
+  }, []);
 
   const startGame = () => {
     setGameStarted(true);
@@ -81,12 +94,14 @@ const DoodleJumpGame = () => {
       requestAnimationFrame(update);
       document.addEventListener("keydown", moveDoodler);
     }
-    console.log("gameStarted", gameStarted);
+    // console.log("gameStarted", gameStarted);
   }, [gameStarted]);
 
   function update() {
     requestAnimationFrame(update);
     if (gameOver) {
+      // setCurrentScore(score);
+      // console.log("currentScore:", currentScore);
       return;
     }
     context.clearRect(0, 0, board.width, board.height);
@@ -100,6 +115,7 @@ const DoodleJumpGame = () => {
 
     velocityY += gravity;
     doodler.y += velocityY;
+
     if (doodler.y > board.height) {
       gameOver = true;
     }
@@ -141,6 +157,7 @@ const DoodleJumpGame = () => {
     context.fillStyle = "black";
     context.font = "16px sans-serif";
     context.fillText(score, 5, 20);
+    // setCurrentScore(score);
 
     if (gameOver) {
       context.fillText(
@@ -245,6 +262,7 @@ const DoodleJumpGame = () => {
     let points = Math.floor(50 * Math.random()); // (0-1) * 50 --> (0-50)
     if (velocityY < 0) {
       //negative going up
+
       maxScore += points;
       if (score < maxScore) {
         score = maxScore;
@@ -254,9 +272,22 @@ const DoodleJumpGame = () => {
     }
   }
 
+  useEffect(() => {
+    const postHighscore = async () => {
+      const response = await axios.post("/api/highscores", {
+        gameId: 2,
+        score: score,
+        userId: user.id,
+      });
+      console.log(response.data);
+    };
+    postHighscore();
+  }, [gameOver]);
+
   return (
     <section className="container-center center-vertical w-screen h-screen">
       <NavBar />
+
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
       <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
         <div className="flex items-center gap-20">
@@ -280,10 +311,19 @@ const DoodleJumpGame = () => {
             }}
             tabIndex="0"
           ></canvas>
-          <div className="bg-black w-96 h-96 p-6 rounded-lg">
+          <div className="bg-black w-96 h-96 p-6 rounded-lg overflow-y-scroll">
             <h1 className="mb-2">Highscores</h1>
             <hr />
             <br />
+            <div>
+              <section>
+                {highscores.map((highscore) => (
+                  <div key={highscore.id}>
+                    {highscore.gameId === 2 ? <h1>{highscore.score}</h1> : null}
+                  </div>
+                ))}
+              </section>
+            </div>
           </div>
           <CloseBtn />
         </div>
