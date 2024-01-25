@@ -3,13 +3,34 @@ import { useEffect, useState } from "react";
 import BackDropImg from "../components/BackDropImg";
 import CloseBtn from "../components/CloseBtn";
 import NavBar from "../components/NavBar";
+import axios from "axios";
 
 const FlappyBird = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [highscores, setHighscores] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getHighscores = async () => {
+      const response = await axios.get("/api/highscores");
+      setHighscores(response.data);
+      // console.log(response.data);
+    };
+    getHighscores();
+  }, []);
 
   const startGame = () => {
     setGameStarted(true);
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await axios.get("/api/users");
+      setUser(response.data);
+      console.log(response.data);
+    };
+    getUser();
+  }, []);
 
   //board
   let board;
@@ -212,6 +233,15 @@ const FlappyBird = () => {
             <h1 className="mb-2">Highscores</h1>
             <hr />
             <br />
+            <div>
+              <section>
+                {highscores.map((highscore) => (
+                  <div key={highscore.id}>
+                    {highscore.gameId === 1 ? <h1>{highscore.score}</h1> : null}
+                  </div>
+                ))}
+              </section>
+            </div>
           </div>
           <CloseBtn />
         </div>
@@ -226,3 +256,7 @@ const FlappyBird = () => {
 };
 
 export default FlappyBird;
+
+//  <div key={highscore.id}>
+//    {highscore.userId === user.id ? <h1>{highscore.score}</h1> : null}
+//  </div>;

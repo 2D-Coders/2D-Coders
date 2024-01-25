@@ -25,21 +25,21 @@ router.get("/:id", async (req, res) => {
 
 // WILL NEED TO WORK ON THIS
 // ===============================================================
-// POST /api/highscores
-// router.post("/", async (req, res) => {
-//   const { score, userId, gameId } = req.body;
-//   try {
-//     const newHighscore = await prisma.highscore.create({
-//       data: {
-//         score,
-//         userId,
-//         gameId,
-//       },
-//     });
-//     res.send(newHighscore);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// });
+// POST / api / highscores;
+router.post("/", async (req, res) => {
+  const { score, userId, gameId } = req.body;
+  try {
+    const newHighscore = await prisma.highscore.create({
+      data: {
+        score,
+        userId,
+        gameId,
+      },
+    });
+    res.send(newHighscore);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 module.exports = router;

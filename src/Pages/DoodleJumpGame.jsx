@@ -3,9 +3,29 @@ import "../../doodleJump/style.css";
 import CloseBtn from "../components/CloseBtn";
 import BackDropImg from "../components/BackDropImg";
 import NavBar from "../components/NavBar";
+import axios from "axios";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [highscores, setHighscores] = useState([]);
+  // const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getHighscores = async () => {
+      const response = await axios.get("/api/highscores");
+      setHighscores(response.data);
+      console.log(response.data);
+    };
+    getHighscores();
+  }, []);
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const response = await axios.get("/api/users");
+  //     setUser(response.data);
+  //   };
+  //   getUser();
+  // }, []);
 
   const startGame = () => {
     setGameStarted(true);
@@ -284,6 +304,15 @@ const DoodleJumpGame = () => {
             <h1 className="mb-2">Highscores</h1>
             <hr />
             <br />
+            <div>
+              <section>
+                {highscores.map((highscore) => (
+                  <div key={highscore.id}>
+                    {highscore.gameId === 2 ? <h1>{highscore.score}</h1> : null}
+                  </div>
+                ))}
+              </section>
+            </div>
           </div>
           <CloseBtn />
         </div>

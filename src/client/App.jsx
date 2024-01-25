@@ -3,7 +3,8 @@ import Experience from "../Pages/Experience";
 import DoodleJumpGame from "../Pages/DoodleJumpGame";
 import FlappyBird from "../Pages/FlappyBird";
 import Home from "../Pages/Home";
-import ChromeDino from "../Pages/ChromeDino"
+import ChromeDino from "../Pages/ChromeDino";
+import AccountTest from "../Pages/AccountTest";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/doodleJump" element={<DoodleJumpGame />} />
       <Route path="/flappyBird" element={<FlappyBird />} />
       <Route path="/chromeDino" element={<ChromeDino />} />
+      <Route path="/account" element={<AccountTest />} />
     </Routes>
   );
 }

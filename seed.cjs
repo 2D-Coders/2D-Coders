@@ -59,14 +59,14 @@ async function main() {
     },
   });
 
-  const game1 = await prisma.game.create({
+  const flappyBird = await prisma.game.create({
     data: {
-      name: "Game 1",
-      description: "Game 1 description",
+      name: "Flappy Bird",
+      description: "Flappy Bird description",
       highscore: {
         create: [
           {
-            score: 100,
+            score: 170,
             userId: bob.id,
           },
           {
@@ -79,6 +79,60 @@ async function main() {
           },
         ],
       },
+    },
+  });
+
+  const doodleJump = await prisma.game.create({
+    data: {
+      name: "Doodle Jump",
+      description: "Doodle Jump description",
+      highscore: {
+        create: [
+          {
+            score: 370,
+            userId: bob.id,
+          },
+          {
+            score: 800,
+            userId: alice.id,
+          },
+          {
+            score: 900,
+            userId: alice.id,
+          },
+        ],
+      },
+    },
+  });
+
+  const chromeDino = await prisma.game.create({
+    data: {
+      name: "Chrome Dino",
+      description: "Chrome Dino description",
+      highscore: {
+        create: [
+          {
+            score: 370,
+            userId: bob.id,
+          },
+          {
+            score: 200,
+            userId: alice.id,
+          },
+          {
+            score: 160,
+            userId: alice.id,
+          },
+        ],
+      },
+    },
+  });
+
+  const highscores = await prisma.highscore.createMany({
+    data: {
+      score: 450,
+      userId: bob.id,
+      gameId: game1.id,
     },
   });
 }
