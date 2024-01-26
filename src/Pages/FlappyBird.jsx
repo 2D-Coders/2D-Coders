@@ -30,22 +30,31 @@ const FlappyBird = () => {
     getMe();
   }, []);
 
-  const openPostHs = async () => {
-    const response = await axios.post("/api/highscores", {
-      gameId: 1,
-      score: captureScore,
-      userId: user.id,
-    });
-    setPostHS(false);
-  };
-
   useEffect(() => {
     const getHighscores = async () => {
-      const response = await axios.get("/api/highscores");
-      setHighscores(response.data);
+      try {
+        const response = await axios.get("/api/highscores");
+        setHighscores(response.data);
+      } catch (error) {
+        console.error("Error fetching highscores:", error);
+      }
     };
+
     getHighscores();
-  }, [openPostHs]);
+  }, [postHS]);
+
+  const openPostHs = async () => {
+    try {
+      await axios.post("/api/highscores", {
+        gameId: 1,
+        score: captureScore,
+        userId: user.id,
+      });
+      setPostHS((prevPostHS) => !prevPostHS);
+    } catch (error) {
+      console.error("Error posting highscore:", error);
+    }
+  };
 
   const startGame = () => {
     setGameStarted(true);
