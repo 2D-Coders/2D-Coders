@@ -1,7 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../../doodleJump/style.css";
+import CloseBtn from "../components/CloseBtn";
+import BackDropImg from "../components/BackDropImg";
+import NavBar from "../components/NavBar";
+import axios from "axios";
 
-const DoodleJumpGame = () => {
+const DoodleJumpGame = ({ user }) => {
+  const [gameStarted, setGameStarted] = useState(false);
+  const [highscores, setHighscores] = useState([]);
+  // const [currentScore, setCurrentScore] = useState(0);
+  // console.log("currentScore:", currentScore);
+
+  useEffect(() => {
+    const getHighscores = async () => {
+      const response = await axios.get("/api/highscores");
+      setHighscores(response.data);
+      // console.log(response.data);
+    };
+    getHighscores();
+  }, []);
+
+  const startGame = () => {
+    setGameStarted(true);
+  };
   //board
   let board;
   let boardWidth = 360;
@@ -40,42 +61,47 @@ const DoodleJumpGame = () => {
   let maxScore = 0;
   let gameOver = false;
 
-  window.onload = function () {
-    board = document.getElementById("board");
-    board.height = boardHeight;
-    board.width = boardWidth;
-    context = board.getContext("2d"); //used for drawing on the board
+  useEffect(() => {
+    if (gameStarted) {
+      board = document.getElementById("doodleboard");
+      board.height = boardHeight;
+      board.width = boardWidth;
+      context = board.getContext("2d"); //used for drawing on the board
 
-    //draw doodler
-    //load images
-    doodlerRightImg = new Image();
-    doodlerRightImg.src = "../../doodleJump/doodler-right.png";
-    doodler.img = doodlerRightImg;
-    doodlerRightImg.onload = function () {
-      context.drawImage(
-        doodler.img,
-        doodler.x,
-        doodler.y,
-        doodler.width,
-        doodler.height
-      );
-    };
+      //draw doodler
+      //load images
+      doodlerRightImg = new Image();
+      doodlerRightImg.src = "../../doodleJump/doodler-right.png";
+      doodler.img = doodlerRightImg;
+      doodlerRightImg.onload = function () {
+        context.drawImage(
+          doodler.img,
+          doodler.x,
+          doodler.y,
+          doodler.width,
+          doodler.height
+        );
+      };
 
-    doodlerLeftImg = new Image();
-    doodlerLeftImg.src = "../../doodleJump/doodler-left.png";
+      doodlerLeftImg = new Image();
+      doodlerLeftImg.src = "../../doodleJump/doodler-left.png";
 
-    platformImg = new Image();
-    platformImg.src = "../../doodleJump/platform.png";
+      platformImg = new Image();
+      platformImg.src = "../../doodleJump/platform.png";
 
-    velocityY = intialVelocityY;
-    placePlatform();
-    requestAnimationFrame(update);
-    document.addEventListener("keydown", moveDoodler);
-  };
+      velocityY = intialVelocityY;
+      placePlatform();
+      requestAnimationFrame(update);
+      document.addEventListener("keydown", moveDoodler);
+    }
+    // console.log("gameStarted", gameStarted);
+  }, [gameStarted]);
 
   function update() {
     requestAnimationFrame(update);
     if (gameOver) {
+      // setCurrentScore(score);
+      // console.log("currentScore:", currentScore);
       return;
     }
     context.clearRect(0, 0, board.width, board.height);
@@ -89,6 +115,7 @@ const DoodleJumpGame = () => {
 
     velocityY += gravity;
     doodler.y += velocityY;
+
     if (doodler.y > board.height) {
       gameOver = true;
     }
@@ -130,6 +157,7 @@ const DoodleJumpGame = () => {
     context.fillStyle = "black";
     context.font = "16px sans-serif";
     context.fillText(score, 5, 20);
+    // setCurrentScore(score);
 
     if (gameOver) {
       context.fillText(
@@ -234,6 +262,7 @@ const DoodleJumpGame = () => {
     let points = Math.floor(50 * Math.random()); // (0-1) * 50 --> (0-50)
     if (velocityY < 0) {
       //negative going up
+
       maxScore += points;
       if (score < maxScore) {
         score = maxScore;
@@ -243,17 +272,68 @@ const DoodleJumpGame = () => {
     }
   }
 
+  useEffect(() => {
+    const postHighscore = async () => {
+      const response = await axios.post("/api/highscores", {
+        gameId: 2,
+        score: score,
+        userId: user.id,
+      });
+      console.log(response.data);
+    };
+    postHighscore();
+  }, [gameOver]);
+
   return (
-    <div
-      className="w-screen h-screen flex justify-center items-center doodleBG
-    "
-    >
-      <canvas
-        id="board"
-        style={{ border: "1px solid #000", display: "block", margin: "0 auto" }}
-        tabIndex="0"
-      ></canvas>
-    </div>
+    <section className="container-center center-vertical w-screen h-screen">
+      <NavBar />
+
+      <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
+      <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
+        <div className="flex items-center gap-20">
+          <div className="bg-black w-96 h-96 p-6 rounded-lg">
+            <h1 className="mb-2">How To Play</h1>
+            <hr />
+            <br />
+            <ul className="leading-loose text-left">
+              <li> To jump, press spacebar</li>
+              <li>Use arrow keys to move player left and right</li>
+              <li>Jump on platforms to gain points</li>
+              <li>Don't fall off the screen</li>
+            </ul>
+          </div>
+          <canvas
+            id="doodleboard"
+            style={{
+              border: "1px solid #000",
+              display: "block",
+              margin: "0 auto",
+            }}
+            tabIndex="0"
+          ></canvas>
+          <div className="bg-black w-96 h-96 p-6 rounded-lg overflow-y-scroll">
+            <h1 className="mb-2">Highscores</h1>
+            <hr />
+            <br />
+            <div>
+              <section>
+                {highscores.map((highscore) => (
+                  <div key={highscore.id}>
+                    {highscore.gameId === 2 ? <h1>{highscore.score}</h1> : null}
+                  </div>
+                ))}
+              </section>
+            </div>
+          </div>
+          <CloseBtn />
+        </div>
+      </div>
+      <button onClick={startGame} className="btn-white animate-bounce text-2xl">
+        PLAY
+      </button>
+
+      <BackDropImg />
+    </section>
   );
 };
 

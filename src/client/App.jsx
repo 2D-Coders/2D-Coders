@@ -1,20 +1,43 @@
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "../Pages/LandingPage";
-import Register from "../Pages/Register";
-import Login from "../Pages/Login";
 import Experience from "../Pages/Experience";
 import DoodleJumpGame from "../Pages/DoodleJumpGame";
 import SpaceInvader from "../Pages/SpaceInvaders";
+import FlappyBird from "../Pages/FlappyBird";
+import Home from "../Pages/Home";
+import ChromeDino from "../Pages/ChromeDino";
+import Account from "../Pages/Account";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const getMe = async () => {
+      try {
+        const response = await axios.get("/api/users/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    getMe();
+  }, []);
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/home" element={<Experience />} />
-      <Route path="/doodleJump" element={<DoodleJumpGame />} />
+      
+      <Route path="/" ={<Home />} />
+      <Route path="/experience" element={<Experience />} />
+      <Route path="/doodleJump" element={<DoodleJumpGame user={user} />} />
+      <Route path="/flappyBird" element={<FlappyBird user={user} />} />
+      <Route path="/chromeDino" element={<ChromeDino user={user} />} />
+      <Route path="/account" element={<Account />} />
       <Route path="/spaceInvader" element={<SpaceInvader />} />
+
     </Routes>
   );
 }
