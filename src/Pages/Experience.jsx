@@ -7,6 +7,7 @@ const Experience = () => {
   return (
     <div className="w-screen h-screen relative flex justify-center items-center">
       <NavBar />
+
       <div>
         <AllGames />
       </div>

@@ -66,16 +66,20 @@ async function main() {
       highscore: {
         create: [
           {
-            score: 170,
+            score: 21,
             userId: bob.id,
           },
           {
-            score: 400,
+            score: 6,
             userId: alice.id,
           },
           {
-            score: 200,
+            score: 8,
             userId: alice.id,
+          },
+          {
+            score: 7,
+            userId: demo.id,
           },
         ],
       },
@@ -100,6 +104,10 @@ async function main() {
             score: 900,
             userId: alice.id,
           },
+          {
+            score: 1000,
+            userId: demo.id,
+          },
         ],
       },
     },
@@ -123,18 +131,22 @@ async function main() {
             score: 160,
             userId: alice.id,
           },
+          {
+            score: 300,
+            userId: demo.id,
+          },
         ],
       },
     },
   });
 
-  const highscores = await prisma.highscore.createMany({
-    data: {
-      score: 450,
-      userId: bob.id,
-      gameId: game1.id,
-    },
-  });
+  //   const highscores = await prisma.highscore.createMany({
+  //     data: {
+  //       score: 450,
+  //       userId: bob.id,
+  //       gameId: flappyBird.id,
+  //     },
+  //   });
 }
 
 main()

@@ -8,6 +8,15 @@ const NavBar = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+
+  // const goToAllGames = () => {
+  //   navigate("/");
+  // };
+
+  const goToAccount = () => {
+    navigate("/account");
+  };
+
   return (
     <div className="top-0 w-screen fixed z-[600]  bg-white bg-opacity-80 text-black">
       <nav className="flex justify-between px-20 py-4 items-center">
@@ -15,8 +24,11 @@ const NavBar = () => {
           <h2> GameZone</h2>
         </Link>
         <ul className="flex gap-6 items-center">
+          {/* <li>
+            <button onClick={goToAllGames}>Games</button>
+          </li> */}
           <li>
-            <a href="/account">Account</a>
+            <button onClick={goToAccount}>Account</button>
           </li>
 
           <button

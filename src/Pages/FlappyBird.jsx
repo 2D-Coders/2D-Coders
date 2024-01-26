@@ -8,42 +8,48 @@ import axios from "axios";
 const FlappyBird = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [highscores, setHighscores] = useState([]);
-  const [users, setUsers] = useState(null);
-  const [singleUser, setSingleUser] = useState(null);
+  const [captureScore, setCaptureScore] = useState(0);
+  const [postHS, setPostHS] = useState(false);
+
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const getMe = async () => {
+      try {
+        const response = await axios.get("/api/users/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    getMe();
+  }, []);
+
+  const openPostHs = async () => {
+    const response = await axios.post("/api/highscores", {
+      gameId: 1,
+      score: captureScore,
+      userId: user.id,
+    });
+    setPostHS(false);
+  };
 
   useEffect(() => {
     const getHighscores = async () => {
-      try {
-        const response = await axios.get("/api/highscores");
-        setHighscores(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching highscores:", error);
-      }
+      const response = await axios.get("/api/highscores");
+      setHighscores(response.data);
     };
     getHighscores();
-  }, []);
+  }, [openPostHs]);
 
   const startGame = () => {
     setGameStarted(true);
   };
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const { data: usersData } = await axios.get("/api/users");
-        setUsers(usersData);
-        // console.log(usersData);
-        users.map((user) => {
-          setSingleUser(user.id);
-          console.log("userId: ", user.id);
-        });
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    getUsers();
-  }, []);
 
   //board
   let board;
@@ -108,7 +114,6 @@ const FlappyBird = () => {
       setInterval(placePipes, 1500);
       document.addEventListener("keydown", moveBird);
     }
-    // console.log("gameStarted", gameStarted);
   }, [gameStarted]);
 
   function update() {
@@ -155,6 +160,8 @@ const FlappyBird = () => {
     context.fillText(score, 5, 45);
 
     if (gameOver) {
+      setPostHS(true);
+      setCaptureScore(score);
       context.fillText("GAME OVER", 5, 90);
     }
   }
@@ -215,6 +222,10 @@ const FlappyBird = () => {
     ); //a's bottom left corner passes b's top left corner
   }
 
+  const closePostHs = () => {
+    setPostHS(false);
+  };
+
   return (
     <section className="container-center center-vertical w-screen h-screen">
       <NavBar />
@@ -242,29 +253,45 @@ const FlappyBird = () => {
             }}
             tabIndex="0"
           ></canvas>
-          <div className="bg-black w-96 h-96 p-6 rounded-lg">
-            <h1 className="mb-2">Highscores</h1>
-            <hr />
-            <br />
-            <div>
-              <section>
-                {highscores.map((highscore) => (
-                  <div className="flex gap-8 justify-center" key={highscore.id}>
-                    <h3 className="text-white">
-                      {highscore.gameId === 1 &&
-                      highscore.userId === singleUser ? (
-                        <>{singleUser.username}</>
+          <section>
+            {postHS ? (
+              <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">
+                <h1 className="text-xl">Post A High Score</h1>
+                <div className="flex gap-4 justify-center items-center ">
+                  <button
+                    onClick={openPostHs}
+                    className="btn-black bg-green-700"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={closePostHs}
+                    className="btn-black bg-red-700"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            <div className="bg-black w-96 h-96 p-6 rounded-lg overflow-y-scroll">
+              <h1 className="mb-2">Highscores</h1>
+              <hr />
+              <br />
+              <div>
+                <section>
+                  {highscores.map((highscore) => (
+                    <div key={highscore.id}>
+                      {highscore.gameId === 1 ? (
+                        <h1>{highscore.score}</h1>
                       ) : null}
-                    </h3>
-                    <br />
-                    {highscore.gameId === 1 ? <h1>{highscore.score}</h1> : null}
-                  </div>
-                ))}
-              </section>
+                    </div>
+                  ))}
+                </section>
+              </div>
             </div>
-          </div>
-          <CloseBtn />
+          </section>
         </div>
+        <CloseBtn />
       </div>
       <button onClick={startGame} className="btn-white animate-bounce text-2xl">
         PLAY
