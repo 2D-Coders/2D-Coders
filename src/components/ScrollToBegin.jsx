@@ -5,7 +5,7 @@ const ScrollToBegin = () => {
     const handleScroll = () => {
       let scroll = window.scrollY;
       let opacity = 1 - scroll / 300;
-      
+
       // Check if the element with class "scroll-down" exists before manipulating its style
       const scrollDownElement = document.querySelector(".scroll-down");
       if (scrollDownElement) {
@@ -23,9 +23,9 @@ const ScrollToBegin = () => {
   }, []); // Empty dependency array ensures that the effect runs once when the component mounts
 
   return (
-    <div className="font-semibold bold scroll-down text-center animate-bounce">
+    <div className="font-semibold bold scroll-down text-center animate-bounce ">
       <h1 className="text-6xl mb-4">WELCOME</h1>
-      <p>SCROLL TO BEGIN</p>
+      <h1 className="text-2xl mb-4">Scroll to begin</h1>
     </div>
   );
 };

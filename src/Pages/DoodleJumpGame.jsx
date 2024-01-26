@@ -5,11 +5,41 @@ import BackDropImg from "../components/BackDropImg";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 
-const DoodleJumpGame = ({ user }) => {
+const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [highscores, setHighscores] = useState([]);
-  // const [currentScore, setCurrentScore] = useState(0);
-  // console.log("currentScore:", currentScore);
+  const [captureScore, setCaptureScore] = useState(0);
+  const [postHS, setPostHS] = useState(false);
+
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const getMe = async () => {
+      try {
+        const response = await axios.get("/api/users/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUser(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    getMe();
+  }, []);
+
+  const openPostHs = async () => {
+    const response = await axios.post("/api/highscores", {
+      gameId: 2,
+      score: captureScore,
+      userId: user.id,
+    });
+    setPostHS(false);
+    console.log(response.data);
+  };
 
   useEffect(() => {
     const getHighscores = async () => {
@@ -18,7 +48,7 @@ const DoodleJumpGame = ({ user }) => {
       // console.log(response.data);
     };
     getHighscores();
-  }, []);
+  }, [openPostHs]);
 
   const startGame = () => {
     setGameStarted(true);
@@ -100,6 +130,7 @@ const DoodleJumpGame = ({ user }) => {
   function update() {
     requestAnimationFrame(update);
     if (gameOver) {
+      setGameStarted(false);
       // setCurrentScore(score);
       // console.log("currentScore:", currentScore);
       return;
@@ -160,8 +191,13 @@ const DoodleJumpGame = ({ user }) => {
     // setCurrentScore(score);
 
     if (gameOver) {
+      // setToggleHsForm(true);
+      setPostHS(true);
+      console.log("score", score);
+      setCaptureScore(score);
+      // setCaptureScore(score);
       context.fillText(
-        "Game Over. Press press 'space' to restart",
+        "Game Over. Press press 'PLAY' to restart",
         boardWidth / 10,
         (boardHeight * 7) / 8
       );
@@ -177,7 +213,8 @@ const DoodleJumpGame = ({ user }) => {
       //move left
       velocityX = -4;
       doodler.img = doodlerLeftImg;
-    } else if (e.code == "Space" && gameOver) {
+      // } else if (e.code == "Space" && gameOver) {
+    } else if (e.code == gameOver) {
       //reset
       doodler = {
         img: doodlerRightImg,
@@ -272,17 +309,9 @@ const DoodleJumpGame = ({ user }) => {
     }
   }
 
-  useEffect(() => {
-    const postHighscore = async () => {
-      const response = await axios.post("/api/highscores", {
-        gameId: 2,
-        score: score,
-        userId: user.id,
-      });
-      console.log(response.data);
-    };
-    postHighscore();
-  }, [gameOver]);
+  const closePostHs = () => {
+    setPostHS(false);
+  };
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
@@ -311,22 +340,45 @@ const DoodleJumpGame = ({ user }) => {
             }}
             tabIndex="0"
           ></canvas>
-          <div className="bg-black w-96 h-96 p-6 rounded-lg overflow-y-scroll">
-            <h1 className="mb-2">Highscores</h1>
-            <hr />
-            <br />
-            <div>
-              <section>
-                {highscores.map((highscore) => (
-                  <div key={highscore.id}>
-                    {highscore.gameId === 2 ? <h1>{highscore.score}</h1> : null}
-                  </div>
-                ))}
-              </section>
+          <section>
+            {postHS ? (
+              <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">
+                <h1 className="text-xl">Post A High Score</h1>
+                <div className="flex gap-4 justify-center items-center ">
+                  <button
+                    onClick={openPostHs}
+                    className="btn-black bg-green-700"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={closePostHs}
+                    className="btn-black bg-red-700"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            <div className="bg-black w-96 h-96 p-6 rounded-lg overflow-y-scroll">
+              <h1 className="mb-2">Highscores</h1>
+              <hr />
+              <br />
+              <div>
+                <section>
+                  {highscores.map((highscore) => (
+                    <div key={highscore.id}>
+                      {highscore.gameId === 2 ? (
+                        <h1>{highscore.score}</h1>
+                      ) : null}
+                    </div>
+                  ))}
+                </section>
+              </div>
             </div>
-          </div>
-          <CloseBtn />
+          </section>
         </div>
+        <CloseBtn />
       </div>
       <button onClick={startGame} className="btn-white animate-bounce text-2xl">
         PLAY
