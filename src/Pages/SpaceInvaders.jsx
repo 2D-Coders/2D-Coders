@@ -1,5 +1,9 @@
+import "../../spaceInvaders/styles.css";
+
+
+const SpaceInvader = () => {
 //Canvas setup to use 2d features.
-const scoreEl = document.querySelector('#scoreEl');
+const scoreEl = document.getElementById('#scoreEl');
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
@@ -487,4 +491,13 @@ if (frames % randomInterval === 0) {
         keys.space.pressed = false
         break
     }
-  })
+  }  )
+  return (
+    <div>
+       <p><span>Score:</span><span id="scoreEl">0</span></p>
+        <canvas></canvas>
+    </div>
+  )
+  }
+  
+export default SpaceInvader;
