@@ -30,7 +30,7 @@ function App() {
   return (
     <Routes>
       
-      <Route path="/" ={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/experience" element={<Experience />} />
       <Route path="/doodleJump" element={<DoodleJumpGame user={user} />} />
       <Route path="/flappyBird" element={<FlappyBird user={user} />} />
