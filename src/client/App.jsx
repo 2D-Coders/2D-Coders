@@ -4,6 +4,7 @@ import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import Experience from "../Pages/Experience";
 import DoodleJumpGame from "../Pages/DoodleJumpGame";
+import SpaceInvader from "../Pages/SpaceInvaders";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Experience />} />
       <Route path="/doodleJump" element={<DoodleJumpGame />} />
-      {/* <Route path="/doodle" element={<DoodleJumpGame />} /> */}
+      <Route path="/spaceInvader" element={<SpaceInvader />} />
     </Routes>
   );
 }
