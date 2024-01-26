@@ -107,7 +107,27 @@ const AccountTest = () => {
                   </div>
                 )}
               </div>
+            </section> 
+            <section className="w-[20rem] h-[30rem] rounded-lg bg-slate-300 text-black">
+              <h1>SpaceInvader</h1>
+              <div>
+                {myHighScores && (
+                  <div className="flex flex-col">
+                    {myHighScores.map((highscore) => {
+                      return (
+                        <div key={highscore.id}>
+                          {highscore.userId === user.id &&
+                          highscore.gameId === 4 ? (
+                            <h1>{highscore.score}</h1>
+                          ) : null}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </section>
+
           </div>
         </div>
       </section>

@@ -36,7 +36,7 @@ function App() {
       <Route path="/flappyBird" element={<FlappyBird user={user} />} />
       <Route path="/chromeDino" element={<ChromeDino user={user} />} />
       <Route path="/account" element={<Account />} />
-      <Route path="/spaceInvader" element={<SpaceInvader />} />
+      <Route path="/spaceInvader" element={<SpaceInvader user={user}/>} />
 
     </Routes>
   );
