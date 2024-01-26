@@ -1,4 +1,8 @@
-/* body {
+
+#spaceInvaderBody {
+
+
+
   margin: 0;
   display: flex;
   justify-content: center;
@@ -7,11 +11,11 @@
 
 }
 
-div {
+#spaceInvaderDiv {
   position: relative;
 }
 
-p {
+#spaceInvaderScore {
   position: absolute;
   z-index: 10;
   color: white;
