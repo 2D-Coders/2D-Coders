@@ -27,32 +27,39 @@ const DoodleJumpGame = () => {
         console.error("Error fetching user data:", error);
       }
     };
-
     getMe();
   }, []);
 
-  const openPostHs = async () => {
-    const response = await axios.post("/api/highscores", {
-      gameId: 2,
-      score: captureScore,
-      userId: user.id,
-    });
-    setPostHS(false);
-    console.log(response.data);
-  };
-
   useEffect(() => {
     const getHighscores = async () => {
-      const response = await axios.get("/api/highscores");
-      setHighscores(response.data);
-      // console.log(response.data);
+      try {
+        const response = await axios.get("/api/highscores");
+        setHighscores(response.data);
+      } catch (error) {
+        console.error("Error fetching highscores:", error);
+      }
     };
+
     getHighscores();
-  }, [openPostHs]);
+  }, [postHS]); // Include postHS as a dependency to trigger useEffect when it changes
+
+  const openPostHs = async () => {
+    try {
+      await axios.post("/api/highscores", {
+        gameId: 2,
+        score: captureScore,
+        userId: user.id,
+      });
+      setPostHS((prevPostHS) => !prevPostHS); // Toggle postHS to trigger useEffect
+    } catch (error) {
+      console.error("Error posting highscore:", error);
+    }
+  };
 
   const startGame = () => {
     setGameStarted(true);
   };
+
   //board
   let board;
   let boardWidth = 360;
