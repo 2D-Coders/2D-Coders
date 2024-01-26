@@ -246,8 +246,8 @@ const ChromeDino = () => {
               </div>
             </div>
           </section>
-          <CloseBtn />
         </div>
+        <CloseBtn />
       </div>
       <button onClick={startGame} className="btn-white animate-bounce text-2xl">
         PLAY
