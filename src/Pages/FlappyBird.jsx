@@ -4,14 +4,30 @@ import BackDropImg from "../components/BackDropImg";
 import CloseBtn from "../components/CloseBtn";
 import NavBar from "../components/NavBar";
 import axios from "axios";
+import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
+import flappyScore from "../../public/Sounds/flappyScore.mp3";
+import flappyDeath from "../../public/Sounds/flappyDeath.mp3";
 
 const FlappyBird = () => {
+  const [audio] = useState(() => new Audio(bgSound));
+  const [scoreAudio] = useState(() => new Audio(flappyScore));
+  const [deathAudio] = useState(() => new Audio(flappyDeath));
   const [gameStarted, setGameStarted] = useState(false);
   const [highscores, setHighscores] = useState([]);
   const [captureScore, setCaptureScore] = useState(0);
   const [postHS, setPostHS] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   const [user, setUser] = useState("");
+
+  const toggleAudio = () => {
+    if (playing) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setPlaying(!playing);
+  };
 
   useEffect(() => {
     const getMe = async () => {
@@ -151,6 +167,8 @@ const FlappyBird = () => {
       if (!pipe.passed && bird.x > pipe.x + pipe.width) {
         score += 0.5; //0.5 because there are 2 pipes! so 0.5*2 = 1, 1 for each set of pipes
         pipe.passed = true;
+        scoreAudio.currentTime = 0; // Set currentTime to 0 before playing
+        scoreAudio.play();
       }
 
       if (detectCollision(bird, pipe)) {
@@ -169,6 +187,8 @@ const FlappyBird = () => {
     context.fillText(score, 5, 45);
 
     if (gameOver) {
+      deathAudio.currentTime = 0; // Set currentTime to 0 before playing
+      deathAudio.play();
       setPostHS(true);
       setCaptureScore(score);
       context.fillText("GAME OVER", 5, 90);
@@ -253,6 +273,12 @@ const FlappyBird = () => {
               <li>Get the highest score!</li>
             </ul>
           </div>
+          <button
+            onClick={toggleAudio}
+            className="btn-white animate-bounce text-2xl"
+          >
+            {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
+          </button>
           <canvas
             id="flappyBoard"
             style={{
