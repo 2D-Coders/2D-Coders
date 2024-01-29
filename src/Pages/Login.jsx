@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState("demo");
+  const [username, setUsername] = useState("DemoAccount");
   const [password, setPassword] = useState("123");
   const [cantLogIn, setCantLogIn] = useState(false);
   const [succesLogIn, setSuccesLogIn] = useState(false);

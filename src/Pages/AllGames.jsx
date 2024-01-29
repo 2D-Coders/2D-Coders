@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AllGames = () => {
   return (
     <>
-      <section className="w-screen flex flex-col justify-center items-center mt-[200rem] mb-28 bg-blue-50 bg-opacity-70">
+      <section className="w-screen flex flex-col justify-center items-center mt-[200rem] mb-28 bg-blue-50 bg-opacity-30">
         <div className="text-6xl font-bold my-4 text-black">Top 3 Games</div>
         <section className="flex justify-center px-10 w-screen">
           <div
