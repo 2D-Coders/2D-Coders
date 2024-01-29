@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const users = [
   {
-    username: "demo",
+    username: "DemoAccount",
     password: "123",
     email: "demo@gmail.com",
   },
@@ -29,7 +29,7 @@ const users = [
 async function main() {
   const demo = await prisma.user.create({
     data: {
-      username: "demo",
+      username: "DemoAccount",
       password: await bcrypt.hash("123", 5),
       email: "demo@gmail.com",
     },
@@ -65,20 +65,32 @@ async function main() {
       description: "Flappy Bird description",
       highscore: {
         create: [
+          // {
+          //   score: 21,
+          //   userId: bob.id,
+          // },
+          // {
+          //   score: 6,
+          //   userId: alice.id,
+          // },
+          // {
+          //   score: 8,
+          //   userId: alice.id,
+          // },
           {
-            score: 21,
-            userId: bob.id,
+            score: 37,
+            userId: demo.id,
           },
           {
-            score: 6,
-            userId: alice.id,
+            score: 32,
+            userId: demo.id,
           },
           {
-            score: 8,
-            userId: alice.id,
+            score: 29,
+            userId: demo.id,
           },
           {
-            score: 7,
+            score: 27,
             userId: demo.id,
           },
         ],
@@ -92,20 +104,33 @@ async function main() {
       description: "Doodle Jump description",
       highscore: {
         create: [
+          // {
+          //   score: 370,
+          //   userId: bob.id,
+          // },
+          // {
+          //   score: 800,
+          //   userId: alice.id,
+          // },
+          // {
+          //   score: 900,
+          //   userId: alice.id,
+          // },
           {
-            score: 370,
-            userId: bob.id,
+            score: 12541,
+            userId: demo.id,
+          },
+
+          {
+            score: 11586,
+            userId: demo.id,
           },
           {
-            score: 800,
-            userId: alice.id,
+            score: 10694,
+            userId: demo.id,
           },
           {
-            score: 900,
-            userId: alice.id,
-          },
-          {
-            score: 1000,
+            score: 8531,
             userId: demo.id,
           },
         ],
@@ -119,20 +144,32 @@ async function main() {
       description: "Chrome Dino description",
       highscore: {
         create: [
+          // {
+          //   score: 370,
+          //   userId: bob.id,
+          // },
+          // {
+          //   score: 200,
+          //   userId: alice.id,
+          // },
+          // {
+          //   score: 160,
+          //   userId: alice.id,
+          // },
           {
-            score: 370,
-            userId: bob.id,
+            score: 300,
+            userId: demo.id,
+          },
+          {
+            score: 250,
+            userId: demo.id,
           },
           {
             score: 200,
-            userId: alice.id,
+            userId: demo.id,
           },
           {
-            score: 160,
-            userId: alice.id,
-          },
-          {
-            score: 300,
+            score: 150,
             userId: demo.id,
           },
         ],
