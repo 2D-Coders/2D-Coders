@@ -30,12 +30,15 @@ function App() {
 
   return (
     <Routes>
+      
       <Route path="/" element={<Home />} />
       <Route path="/experience" element={<Experience />} />
       <Route path="/doodleJump" element={<DoodleJumpGame />} />
       <Route path="/flappyBird" element={<FlappyBird />} />
       <Route path="/chromeDino" element={<ChromeDino />} />
       <Route path="/account" element={<Account />} />
+
+
       <Route path="/spaceInvader" element={<SpaceInvader />} />
     </Routes>
   );

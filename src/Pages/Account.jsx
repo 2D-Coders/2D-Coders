@@ -100,6 +100,7 @@ const AccountTest = () => {
               <div className="w-full bg-blue-900 text-white h-[4rem] flex justify-center items-center rounded-lg">
                 <h1>Chrome Dino</h1>
               </div>
+
               <section className="  w-[20rem] h-[30rem] rounded-lg bg-slate-100 text-black ">
                 <div>
                   {myHighScores && (
@@ -119,6 +120,7 @@ const AccountTest = () => {
                 </div>
               </section>
             </div>
+
           </div>
         </div>
       </section>

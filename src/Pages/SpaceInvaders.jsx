@@ -1,16 +1,54 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "../../spaceInvaders/styles.css";
-
+import BackDropImg from "../components/BackDropImg";
+import CloseBtn from "../components/CloseBtn";
+import NavBar from "../components/NavBar";
 
 const SpaceInvader = () => {
-//Canvas setup to use 2d features.
-const scoreEl = document.getElementById('#scoreEl');
-const canvas = document.querySelector('canvas');
-const c = canvas.getContext('2d');
+  const [gameStarted, setGameStarted] = useState(false);
+  const [highscores, setHighscores] = useState([]);
 
-// Screen dimensions to play on diff platforms
-canvas.width = 1024;
-canvas.height = 576;
+  useEffect(() => {
+    const getHighscores = async () => {
+      try {
+        const response = await axios.get("/api/highscores");
+        setHighscores(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching highscores:", error);
+      }
+    };
+    getHighscores();
+  }, []);
 
+  const startGame = () => {
+    setGameStarted(true);
+  };
+
+  useEffect(() => {
+    if (gameStarted) {
+      // Code related to the game, including canvas setup, should go here
+      const scoreEl = document.getElementById("scoreEl");
+
+      // Check if the canvas element exists before accessing its context
+      const canvas = document.getElementById("spaceInvaderBody");
+      if (!canvas) {
+        console.error("Canvas element not found");
+        return;
+      }
+
+      const c = canvas.getContext("2d");
+      if (!c) {
+        console.error("Unable to get 2D context for canvas");
+        return;
+      }
+
+      // Rest of the canvas setup and game logic...
+      canvas.width = 1024;
+      canvas.height = 576;
+
+    startGame()
 //Create a player
 class Player {
   constructor() {
@@ -246,7 +284,7 @@ class Player {
           }
         }
     }
-// Variables I have made
+// Variables 
 const player = new Player();
 const projectiles = []
 const grids = []
@@ -307,6 +345,51 @@ const createParticles = ({object, color, fades}) => {
       fades
     }))}
 }
+
+
+
+ 
+
+// Event Listeners for a,d, and space buttons
+  addEventListener('keydown', ({key}) => {
+    if(game.over) return
+    switch (key) {
+      case 'a':
+        keys.a.pressed = true
+        break
+        case 'd':
+        keys.d.pressed = true
+        break
+        case ' ':
+        projectiles.push(
+          new Projectile({
+            position: {
+            x: player.position.x + player.width / 2,
+            y: player.position.y
+          },
+          velocity: {
+            x: 0,
+            y: -10
+          }
+        })
+        )
+        break
+    }
+  })
+
+  addEventListener('keyup', ({key}) => {
+    switch (key) {
+      case 'a':
+        keys.a.pressed = false
+        break
+        case 'd':
+        keys.d.pressed = false
+        break
+        case ' ':
+        keys.space.pressed = false
+        break
+    }
+  }  )
 
 // animate function for all animations that happen on your screen. 
 const animate = () => {
@@ -449,55 +532,61 @@ if (frames % randomInterval === 0) {
 
   frames++
 }
-
-  animate();
-
-// Event Listeners for a,d, and space buttons
-  addEventListener('keydown', ({key}) => {
-    if(game.over) return
-    switch (key) {
-      case 'a':
-        keys.a.pressed = true
-        break
-        case 'd':
-        keys.d.pressed = true
-        break
-        case ' ':
-        projectiles.push(
-          new Projectile({
-            position: {
-            x: player.position.x + player.width / 2,
-            y: player.position.y
-          },
-          velocity: {
-            x: 0,
-            y: -10
-          }
-        })
-        )
-        break
+      animate();
     }
-  })
+  }, [gameStarted]);
 
-  addEventListener('keyup', ({key}) => {
-    switch (key) {
-      case 'a':
-        keys.a.pressed = false
-        break
-        case 'd':
-        keys.d.pressed = false
-        break
-        case ' ':
-        keys.space.pressed = false
-        break
-    }
-  }  )
   return (
-    <div>
-       <p><span>Score:</span><span id="scoreEl">0</span></p>
-        <canvas></canvas>
+    <section className="container-center center-vertical w-screen h-screen">
+    <NavBar />
+
+    <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Space Invader</h1>
+    <div className="m-8 relative px-12 py-28 rounded-lg" id="spaceInvader">
+      <div className="flex items-center gap-20">
+      {/* <canvas id="spaceInvaderBody"></canvas> */}
+        <div className="bg-black w-96 h-96 p-6 rounded-lg">
+          <h1 className="mb-2">How To Play</h1>
+          <hr />
+          <br />
+          <ul className="leading-loose text-left">
+            <li> Press spacebar to shoot enemies</li>
+            <li>Earn points by surviving</li>
+            <li>Avoid enemy projectiles!!!</li>
+          </ul>
+        </div>
+        <canvas
+          id="spaceInvaderBody"
+          style={{
+            border: "1px solid #000",
+            display: "block",
+            margin: "0 auto",
+          }}
+          tabIndex="0"
+        ></canvas>
+        <div className="bg-black w-96 h-96 p-6 rounded-lg overflow-y-scroll">
+          <h1 className="mb-2">Highscores</h1>
+          <hr />
+          <br />
+          <div>
+            <section>
+              {highscores.map((highscore) => (
+                <div key={highscore.id}>
+                  {highscore.gameId === 4 ? <h1>{highscore.score}</h1> : null}
+                </div>
+              ))}
+            </section>
+          </div>
+        </div>
+        <CloseBtn />
+      </div>
     </div>
+    <button onClick={startGame} className="btn-white animate-bounce text-2xl">
+      PLAY
+    </button>
+    <BackDropImg />
+  </section>
   )
-  }
-  
+  ;
+};
+
 export default SpaceInvader;

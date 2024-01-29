@@ -1,17 +1,16 @@
-/* body {
+#spaceInvaderBody {
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: black;
-
 }
 
-div {
+#spaceInvaderDiv {
   position: relative;
 }
 
-p {
+#spaceInvaderScore {
   position: absolute;
   z-index: 10;
   color: white;
@@ -20,4 +19,4 @@ p {
   margin: 0;
   font-family: sans-serif;
   font-size: 14px;
-} */
+}
