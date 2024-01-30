@@ -2,16 +2,40 @@ import { useEffect, useState } from "react";
 import "../../doodleJump/style.css";
 import CloseBtn from "../components/CloseBtn";
 import BackDropImg from "../components/BackDropImg";
-import NavBar from "../components/NavBar";
 import axios from "axios";
+import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
+import jumpSound from "../../public/Sounds/jumpSound.mp3";
+import gameOverSound from "../../public/Sounds/gameOver.mp3";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [audio] = useState(new Audio(bgSound));
   const [highscores, setHighscores] = useState([]);
   const [captureScore, setCaptureScore] = useState(0);
   const [postHS, setPostHS] = useState(false);
-
+  const [playing, setPlaying] = useState(false);
   const [user, setUser] = useState("");
+  const jumpAudio = new Audio(jumpSound);
+  const gameOverAudio = new Audio(gameOverSound);
+
+  const toggleAudio = () => {
+    if (playing) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setPlaying(!playing);
+  };
+
+  function playJumpSound() {
+    jumpAudio.currentTime = 0; // Reset the sound to the beginning
+    jumpAudio.play();
+  }
+
+  function playGameOverSound() {
+    gameOverAudio.currentTime = 0; // Reset the sound to the beginning
+    gameOverAudio.play();
+  }
 
   useEffect(() => {
     const getMe = async () => {
@@ -138,6 +162,7 @@ const DoodleJumpGame = () => {
     requestAnimationFrame(update);
     if (gameOver) {
       setGameStarted(false);
+
       // setCurrentScore(score);
       // console.log("currentScore:", currentScore);
       return;
@@ -173,6 +198,7 @@ const DoodleJumpGame = () => {
       }
       if (detectCollision(doodler, platform) && velocityY >= 0) {
         velocityY = intialVelocityY; //jump off platform
+        playJumpSound();
       }
       context.drawImage(
         platform.img,
@@ -199,6 +225,7 @@ const DoodleJumpGame = () => {
 
     if (gameOver) {
       // setToggleHsForm(true);
+      playGameOverSound();
       setPostHS(true);
       console.log("score", score);
       setCaptureScore(score);
@@ -322,8 +349,6 @@ const DoodleJumpGame = () => {
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
-      <NavBar />
-
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
       <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
         <div className="flex items-center gap-20">
@@ -338,6 +363,12 @@ const DoodleJumpGame = () => {
               <li>Don't fall off the screen</li>
             </ul>
           </div>
+          <button
+            onClick={toggleAudio}
+            className="btn-white animate-bounce text-2xl"
+          >
+            {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
+          </button>
           <canvas
             id="doodleboard"
             style={{
