@@ -3,29 +3,17 @@ import "../../doodleJump/style.css";
 import CloseBtn from "../components/CloseBtn";
 import BackDropImg from "../components/BackDropImg";
 import axios from "axios";
-import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
 import jumpSound from "../../public/Sounds/jumpSound.mp3";
 import gameOverSound from "../../public/Sounds/gameOver.mp3";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [audio] = useState(new Audio(bgSound));
   const [highscores, setHighscores] = useState([]);
   const [captureScore, setCaptureScore] = useState(0);
   const [postHS, setPostHS] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const [user, setUser] = useState("");
   const jumpAudio = new Audio(jumpSound);
   const gameOverAudio = new Audio(gameOverSound);
-
-  const toggleAudio = () => {
-    if (playing) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setPlaying(!playing);
-  };
 
   function playJumpSound() {
     jumpAudio.currentTime = 0; // Reset the sound to the beginning
@@ -363,12 +351,6 @@ const DoodleJumpGame = () => {
               <li>Don't fall off the screen</li>
             </ul>
           </div>
-          <button
-            onClick={toggleAudio}
-            className="btn-white animate-bounce text-2xl"
-          >
-            {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
-          </button>
           <canvas
             id="doodleboard"
             style={{
