@@ -6,6 +6,7 @@ import axios from "axios";
 import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
 import jumpSound from "../../public/Sounds/jumpSound.mp3";
 import gameOverSound from "../../public/Sounds/gameOver.mp3";
+import NavBar from "../components/NavBar";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -349,6 +350,7 @@ const DoodleJumpGame = () => {
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
+      <NavBar />
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
       <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
         <div className="flex items-center gap-20">
@@ -363,21 +365,23 @@ const DoodleJumpGame = () => {
               <li>Don't fall off the screen</li>
             </ul>
           </div>
-          <button
-            onClick={toggleAudio}
-            className="btn-white animate-bounce text-2xl"
-          >
-            {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
-          </button>
-          <canvas
-            id="doodleboard"
-            style={{
-              border: "1px solid #000",
-              display: "block",
-              margin: "0 auto",
-            }}
-            tabIndex="0"
-          ></canvas>
+          <div className="flex flex-col">
+            <canvas
+              id="doodleboard"
+              style={{
+                border: "1px solid #000",
+                display: "block",
+                margin: "0 auto",
+              }}
+              tabIndex="0"
+            ></canvas>
+            <button
+              onClick={toggleAudio}
+              className="btn-white animate-bounce text-2xl"
+            >
+              {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
+            </button>
+          </div>
           <section>
             {postHS ? (
               <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">
