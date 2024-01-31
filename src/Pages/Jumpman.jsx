@@ -5,8 +5,6 @@ import BackDropImg from "../components/BackDropImg";
 import axios from "axios";
 import jumpSound from "../../public/Sounds/jumpSound.mp3";
 import gameOverSound from "../../public/Sounds/gameOver.mp3";
-import NavBar from "../components/NavBar";
-import LoadScreen from "../components/LoadScreen";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -91,7 +89,7 @@ const DoodleJumpGame = () => {
   //physics
   let velocityX = 0;
   let velocityY = 0; // doodler jump speed
-  let intialVelocityY = -8; // starting velocity y
+  let initialVelocityY = -8; // starting velocity y
   let gravity = 0.4;
 
   //platforms
@@ -112,17 +110,22 @@ const DoodleJumpGame = () => {
   let maxScore = 0;
   let gameOver = false;
 
+
+  let disappearingPlatforms = [];
+let invisibleDuration = 5000; // 5 seconds in milliseconds
+let nextDisappearanceTime = 0;
+
   useEffect(() => {
     if (gameStarted) {
-      board = document.getElementById("doodleboard");
+      board = document.getElementById("board");
       board.height = boardHeight;
       board.width = boardWidth;
       context = board.getContext("2d"); //used for drawing on the board
-
+    
       //draw doodler
       //load images
       doodlerRightImg = new Image();
-      doodlerRightImg.src = "../../doodleJump/doodler-right.png";
+      doodlerRightImg.src = "./legendofJumpman/Untitled2.png";
       doodler.img = doodlerRightImg;
       doodlerRightImg.onload = function () {
         context.drawImage(
@@ -134,13 +137,14 @@ const DoodleJumpGame = () => {
         );
       };
 
+
       doodlerLeftImg = new Image();
-      doodlerLeftImg.src = "../../doodleJump/doodler-left.png";
-
+      doodlerLeftImg.src = "./legendofJumpman/Untitled.png";
+    
       platformImg = new Image();
-      platformImg.src = "../../doodleJump/platform.png";
-
-      velocityY = intialVelocityY;
+      platformImg.src = "./legendofJumpman/platform.png";
+    
+      velocityY = initialVelocityY;
       placePlatform();
       requestAnimationFrame(update);
       document.addEventListener("keydown", moveDoodler);
@@ -148,13 +152,10 @@ const DoodleJumpGame = () => {
     // console.log("gameStarted", gameStarted);
   }, [gameStarted]);
 
+
   function update() {
     requestAnimationFrame(update);
     if (gameOver) {
-      setGameStarted(false);
-
-      // setCurrentScore(score);
-      // console.log("currentScore:", currentScore);
       return;
     }
     context.clearRect(0, 0, board.width, board.height);
@@ -165,10 +166,9 @@ const DoodleJumpGame = () => {
     } else if (doodler.x + doodler.width < 0) {
       doodler.x = boardWidth;
     }
-
+  
     velocityY += gravity;
     doodler.y += velocityY;
-
     if (doodler.y > board.height) {
       gameOver = true;
     }
@@ -179,66 +179,85 @@ const DoodleJumpGame = () => {
       doodler.width,
       doodler.height
     );
-
+  
     //platforms
     for (let i = 0; i < platformArray.length; i++) {
       let platform = platformArray[i];
-      if (velocityY < 0 && doodler.y < (boardHeight * 3) / 4) {
-        platform.y -= intialVelocityY; //slide platform down
-      }
+  
       if (detectCollision(doodler, platform) && velocityY >= 0) {
-        velocityY = intialVelocityY; //jump off platform
-        playJumpSound();
+        velocityY = initialVelocityY; //jump off platform
       }
-      context.drawImage(
-        platform.img,
-        platform.x,
-        platform.y,
-        platform.width,
-        platform.height
-      );
+  
+      // Only draw platform if visible
+      if (platform.visible) {
+        context.drawImage(
+          platform.img,
+          platform.x,
+          platform.y,
+          platform.width,
+          platform.height
+        );
+      }
+  
+      // Move the platform horizontally
+      platform.x += platform.velocityX;
+  
+      // Wrap the platform around the screen
+      if (platform.x < -platform.width) {
+        platform.x = boardWidth;
+      } else if (platform.x > boardWidth) {
+        platform.x = -platform.width;
+      }
+  
+      // Check if it's time to make platforms disappear
+      if (platform.disappearingTime <= Date.now()) {
+        platform.visible = false;
+      }
     }
-
-    //clear platform and add new
-    while (platformArray.length > 0 && platformArray[0].y >= boardHeight) {
-      platformArray.shift(); //removes first element from the array
-      newPlatform(); //replace the platform with new on top
+  
+    // Check if it's time to make platforms disappear
+    if (Date.now() >= nextDisappearanceTime) {
+      makePlatformsDisappear();
+      nextDisappearanceTime = Date.now() + invisibleDuration;
     }
-
+  
     //score
-
     updateScore();
-    context.fillStyle = "black";
+    context.fillStyle = "blue";
     context.font = "16px sans-serif";
     context.fillText(score, 5, 20);
-    // setCurrentScore(score);
-
+  
     if (gameOver) {
-      // setToggleHsForm(true);
-      playGameOverSound();
-      setPostHS(true);
-      console.log("score", score);
-      setCaptureScore(score);
-      // setCaptureScore(score);
       context.fillText(
-        "Game Over. Press press 'PLAY' to restart",
+        "You lose. Hit space to restart!",
         boardWidth / 10,
-        (boardHeight * 7) / 8
+        (boardHeight * 4) / 8
       );
     }
   }
-
+  
+  function makePlatformsDisappear() {
+    // Randomly select platforms to disappear
+    disappearingPlatforms = [];
+    for (let i = 0; i < 3; i++) {
+      let randomIndex = Math.floor(Math.random() * platformArray.length);
+      let platform = platformArray[randomIndex];
+      platform.visible = false;
+      platform.disappearingTime = Date.now() + invisibleDuration; // Set the time when the platform will reappear
+      disappearingPlatforms.push(platform);
+    }
+  }
+  
   function moveDoodler(e) {
     if (e.code == "ArrowRight" || e.code == "KeyD") {
       //move right
-      velocityX = 4;
+      velocityX = 6;
       doodler.img = doodlerRightImg;
     } else if (e.code == "ArrowLeft" || e.code == "KeyA") {
       //move left
-      velocityX = -4;
+      velocityX = -6;
       doodler.img = doodlerLeftImg;
-      // } else if (e.code == "Space" && gameOver) {
-    } else if (e.code == gameOver) {
+    } else if (e.code == "Space" && gameOver) {
       //reset
       doodler = {
         img: doodlerRightImg,
@@ -247,69 +266,59 @@ const DoodleJumpGame = () => {
         width: doodlerWidth,
         height: doodlerHeight,
       };
-
+  
       velocityX = 0;
-      velocityY = intialVelocityY;
+      velocityY = initialVelocityY;
       score = 0;
       maxScore = 0;
       gameOver = false;
       placePlatform();
     }
   }
-
+  
   function placePlatform() {
     platformArray = [];
-
-    //starting platforms
-    let platform = {
+  
+    // Add one more platform at the bottom
+    let bottomPlatform = {
       img: platformImg,
-      x: boardWidth / 2,
-      y: boardHeight - 50,
+      x: boardWidth / 3, // Adjust the x position as needed
+      y: boardHeight - platformHeight,
       width: platformWidth,
       height: platformHeight,
+      velocityX: Math.random() > 0.5 ? 2 : -2, // Randomly choose initial horizontal velocity
+      velocityY: 0,
+      visible: true, // Set the bottom platform as always visible
     };
-
-    platformArray.push(platform);
-
-    // platform = {
-    //   img: platformImg,
-    //   x: boardWidth / 2,
-    //   y: boardHeight - 150,
-    //   width: platformWidth,
-    //   height: platformHeight,
-    // };
-
-    // platformArray.push(platform);
-
+    platformArray.push(bottomPlatform);
+  
+    // Add other platforms with random positions and movements
     for (let i = 0; i < 6; i++) {
       let randomX = Math.floor((Math.random() * boardWidth * 3) / 4); //(0-1) * boardWidth*3/4
-
+  
+      // Ensure the platform is within the visible area of the screen
+      if (randomX + platformWidth > boardWidth) {
+        randomX = boardWidth - platformWidth;
+      }
+  
+      let platformVelocityX = Math.random() > 0.5 ? 2 : -2; // Randomly choose direction
+      let platformVelocityY = 0; // You can adjust the vertical movement if needed
+  
       let platform = {
         img: platformImg,
         x: randomX,
         y: boardHeight - 75 * i - 150,
         width: platformWidth,
         height: platformHeight,
+        velocityX: platformVelocityX,
+        velocityY: platformVelocityY,
+        visible: true, // By default, platforms are visible
       };
-
+  
       platformArray.push(platform);
     }
   }
-
-  function newPlatform() {
-    let randomX = Math.floor((Math.random() * boardWidth * 3) / 4); //(0-1) * boardWidth*3/4
-
-    let platform = {
-      img: platformImg,
-      x: randomX,
-      y: -platformHeight,
-      width: platformWidth,
-      height: platformHeight,
-    };
-
-    platformArray.push(platform);
-  }
-
+  
   function detectCollision(a, b) {
     return (
       a.x < b.x + b.width && //a's top left corner doesnt reach b's top right corner
@@ -318,12 +327,11 @@ const DoodleJumpGame = () => {
       a.y + a.height > b.y
     ); //a's bottom left corner passes b's top left corner
   }
-
+  
   function updateScore() {
     let points = Math.floor(50 * Math.random()); // (0-1) * 50 --> (0-50)
     if (velocityY < 0) {
       //negative going up
-
       maxScore += points;
       if (score < maxScore) {
         score = maxScore;
@@ -332,42 +340,37 @@ const DoodleJumpGame = () => {
       maxScore -= points;
     }
   }
-
   const closePostHs = () => {
-    setPostHS(false);
+    setPostHS(true);
   };
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
-      <LoadScreen />
-      <NavBar />
-      <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
-      <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
+      <h1 className="bg-orange p-4 rounded-lg mb-4 text-black">The Legend of Jumpman</h1>
+      <div className="m-8 relative px-12 py-28 rounded-lg" id="BG">
         <div className="flex items-center gap-20">
           <div className="bg-black w-96 h-96 p-6 rounded-lg">
             <h1 className="mb-2">How To Play</h1>
             <hr />
             <br />
             <ul className="leading-loose text-left">
-              <li> To jump, press spacebar</li>
-              <li>Use arrow keys to move player left and right</li>
-              <li>Jump on platforms to gain points</li>
-              <li>Don't fall off the screen</li>
+              <li> Use space to Jump!</li>
+              <li>Arrow keys move you left and right</li>
+              <li>Survive to gain points</li>
+              <li>Don't fall!</li>
             </ul>
           </div>
-          <div className="flex flex-col">
-            <canvas
-              id="doodleboard"
-              style={{
-                border: "1px solid #000",
-                display: "block",
-                margin: "0 auto",
-              }}
-              tabIndex="0"
-            ></canvas>
-
-          </div>
-
+          {gameStarted && (
+  <canvas
+    id="board"
+    style={{
+      border: "1px solid #000",
+      display: "block",
+      margin: "0 auto",
+    }}
+    tabIndex="0"
+  ></canvas>
+)}
           <section>
             {postHS ? (
               <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">
