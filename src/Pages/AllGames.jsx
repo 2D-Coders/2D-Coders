@@ -41,7 +41,7 @@ const AllGames = () => {
           </div>
         </section>
 
-        <div
+        {/* <div
           id="spaceInvaderBody"
           className=" w-[1000px] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
         >
@@ -50,7 +50,7 @@ const AllGames = () => {
               PLAY
             </div>
           </Link>
-        </div>
+        </div> */}
 
         <ScrollToTop />
       </section>

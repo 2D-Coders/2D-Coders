@@ -261,16 +261,24 @@ const FlappyBird = () => {
               <li>Get the highest score!</li>
             </ul>
           </div>
+          <div className="flex flex-col">
+            <canvas
+              id="flappyBoard"
+              style={{
+                border: "1px solid #000",
+                display: "block",
+                margin: "0 auto",
+              }}
+              tabIndex="0"
+            ></canvas>
+            <button
+              onClick={toggleAudio}
+              className="btn-white animate-bounce text-2xl"
+            >
+              {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
+            </button>
+          </div>
 
-          <canvas
-            id="flappyBoard"
-            style={{
-              border: "1px solid #000",
-              display: "block",
-              margin: "0 auto",
-            }}
-            tabIndex="0"
-          ></canvas>
           <section>
             {postHS ? (
               <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">
