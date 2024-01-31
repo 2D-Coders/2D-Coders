@@ -3,30 +3,18 @@ import "../../doodleJump/style.css";
 import CloseBtn from "../components/CloseBtn";
 import BackDropImg from "../components/BackDropImg";
 import axios from "axios";
-import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
 import jumpSound from "../../public/Sounds/jumpSound.mp3";
 import gameOverSound from "../../public/Sounds/gameOver.mp3";
 import NavBar from "../components/NavBar";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [audio] = useState(new Audio(bgSound));
   const [highscores, setHighscores] = useState([]);
   const [captureScore, setCaptureScore] = useState(0);
   const [postHS, setPostHS] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const [user, setUser] = useState("");
   const jumpAudio = new Audio(jumpSound);
   const gameOverAudio = new Audio(gameOverSound);
-
-  const toggleAudio = () => {
-    if (playing) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setPlaying(!playing);
-  };
 
   function playJumpSound() {
     jumpAudio.currentTime = 0; // Reset the sound to the beginning
@@ -382,6 +370,7 @@ const DoodleJumpGame = () => {
               {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
             </button>
           </div>
+
           <section>
             {postHS ? (
               <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">

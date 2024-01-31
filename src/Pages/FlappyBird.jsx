@@ -4,30 +4,18 @@ import BackDropImg from "../components/BackDropImg";
 import CloseBtn from "../components/CloseBtn";
 import NavBar from "../components/NavBar";
 import axios from "axios";
-import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
 import flappyScore from "../../public/Sounds/flappyScore.mp3";
 import flappyDeath from "../../public/Sounds/flappyDeath.mp3";
 
 const FlappyBird = () => {
-  const [audio] = useState(() => new Audio(bgSound));
   const [scoreAudio] = useState(() => new Audio(flappyScore));
   const [deathAudio] = useState(() => new Audio(flappyDeath));
   const [gameStarted, setGameStarted] = useState(false);
   const [highscores, setHighscores] = useState([]);
   const [captureScore, setCaptureScore] = useState(0);
   const [postHS, setPostHS] = useState(false);
-  const [playing, setPlaying] = useState(false);
 
   const [user, setUser] = useState("");
-
-  const toggleAudio = () => {
-    if (playing) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setPlaying(!playing);
-  };
 
   useEffect(() => {
     const getMe = async () => {
@@ -290,6 +278,7 @@ const FlappyBird = () => {
               {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
             </button>
           </div>
+
           <section>
             {postHS ? (
               <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">

@@ -4,27 +4,14 @@ import BackDropImg from "../components/BackDropImg";
 import CloseBtn from "../components/CloseBtn";
 import NavBar from "../components/NavBar";
 import axios from "axios";
-import bgSound from "../../public/Sounds/samuraiChamploo.mp3";
 import dinoJump from "../../public/Sounds/dinoJump.mp3";
 import dinoDeath from "../../public/Sounds/dinoDeath.mp3";
 
 const ChromeDino = () => {
-  const [audio] = useState(() => new Audio(bgSound));
   const [jumpAudio] = useState(() => new Audio(dinoJump));
   const [deathAudio] = useState(() => new Audio(dinoDeath));
   const [gameStarted, setGameStarted] = useState(false);
   const [highscores, setHighscores] = useState([]);
-  const [playing, setPlaying] = useState(false);
-  // const [user, setUser] = useState(null);
-
-  const toggleAudio = () => {
-    if (playing) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setPlaying(!playing);
-  };
 
   useEffect(() => {
     const getHighscores = async () => {
@@ -34,14 +21,6 @@ const ChromeDino = () => {
     };
     getHighscores();
   }, []);
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const response = await axios.get("/api/users");
-  //     setUser(response.data);
-  //   };
-  //   getUser();
-  // }, []);
 
   const startGame = () => {
     setGameStarted(true);
@@ -236,12 +215,6 @@ const ChromeDino = () => {
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Chrome Dino</h1>
       <div className="m-8 relative px-28 py-12 rounded-lg" id="chromeDino">
         <div className="flex flex-col items-center gap-20">
-          <button
-            onClick={toggleAudio}
-            className="btn-white animate-bounce text-2xl"
-          >
-            {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
-          </button>
           <canvas id="chromeBoard"></canvas>
           <section className="flex gap-20">
             <div className="bg-black w-96 h-96 p-6 rounded-lg">
