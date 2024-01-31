@@ -9,14 +9,6 @@ const NavBar = () => {
     navigate("/");
   };
 
-  // const goToAllGames = () => {
-  //   navigate("/");
-  // };
-
-  const goToAccount = () => {
-    navigate("/account");
-  };
-
   return (
     <div className="top-0 w-screen fixed z-[600]  bg-white bg-opacity-80 text-black">
       <nav className="flex justify-between px-20 py-4 items-center">
@@ -28,7 +20,7 @@ const NavBar = () => {
             <button onClick={goToAllGames}>Games</button>
           </li> */}
           <li>
-            <button onClick={goToAccount}>Account</button>
+            <a href="/account">Account</a>
           </li>
 
           <button

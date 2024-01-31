@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import flappyScore from "../../public/Sounds/flappyScore.mp3";
 import flappyDeath from "../../public/Sounds/flappyDeath.mp3";
+import LoadScreen from "../components/LoadScreen";
 
 const FlappyBird = () => {
   const [scoreAudio] = useState(() => new Audio(flappyScore));
@@ -245,6 +246,7 @@ const FlappyBird = () => {
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
+      <LoadScreen />
       <NavBar />
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Flappy Bird</h1>
 
@@ -271,12 +273,6 @@ const FlappyBird = () => {
               }}
               tabIndex="0"
             ></canvas>
-            <button
-              onClick={toggleAudio}
-              className="btn-white animate-bounce text-2xl"
-            >
-              {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
-            </button>
           </div>
 
           <section>

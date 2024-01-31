@@ -20,7 +20,7 @@ const ScrollToBegin = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); // Empty dependency array ensures that the effect runs once when the component mounts
+  }, []);
 
   return (
     <div className="font-semibold bold scroll-down text-center animate-bounce ">

@@ -6,6 +6,7 @@ import axios from "axios";
 import jumpSound from "../../public/Sounds/jumpSound.mp3";
 import gameOverSound from "../../public/Sounds/gameOver.mp3";
 import NavBar from "../components/NavBar";
+import LoadScreen from "../components/LoadScreen";
 
 const DoodleJumpGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -338,6 +339,7 @@ const DoodleJumpGame = () => {
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
+      <LoadScreen />
       <NavBar />
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Doodle Jump</h1>
       <div className="m-8 relative px-12 py-28 rounded-lg" id="doodleBG">
@@ -363,12 +365,7 @@ const DoodleJumpGame = () => {
               }}
               tabIndex="0"
             ></canvas>
-            {/* <button
-              // onClick={toggleAudio}
-              className="btn-white animate-bounce text-2xl"
-            >
-              {playing ? "PAUSE" : "PLAY LOFI MUSIC"}
-            </button> */}
+
           </div>
 
           <section>
