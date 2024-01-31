@@ -2,10 +2,12 @@ import CityScene from "../components/CityScene";
 import ScrollToBegin from "../components/ScrollToBegin";
 import NavBar from "../components/NavBar";
 import AllGames from "./AllGames";
+import LoadScreen from "../components/LoadScreen";
 
 const Experience = () => {
   return (
     <div className="w-screen h-screen relative flex justify-center items-center">
+      <LoadScreen />
       <NavBar />
 
       <div>

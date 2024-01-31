@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import dinoJump from "../../public/Sounds/dinoJump.mp3";
 import dinoDeath from "../../public/Sounds/dinoDeath.mp3";
+import LoadScreen from "../components/LoadScreen";
 
 const ChromeDino = () => {
   const [jumpAudio] = useState(() => new Audio(dinoJump));
@@ -211,6 +212,7 @@ const ChromeDino = () => {
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
+      <LoadScreen />
       <NavBar />
       <h1 className="bg-white p-4 rounded-lg mb-4 text-black">Chrome Dino</h1>
       <div className="m-8 relative px-28 py-12 rounded-lg" id="chromeDino">

@@ -10,7 +10,7 @@ const ScrollToTop = () => {
   };
   return (
     <ArrowUpIcon
-      className="fixed cursor-pointer right-10 bottom-10 z-50 w-10 h-10 p-2 rounded-full bg-white text-black"
+      className="fixed cursor-pointer right-10 bottom-10 z-50 w-10 h-10 p-2 rounded-full bg-white text-black hover:transform hover:scale-110 transition-all duration-300 ease-in-out"
       onClick={handleUpBtn}
     />
   );

@@ -8,36 +8,14 @@ import ChromeDino from "../Pages/ChromeDino";
 import Account from "../Pages/Account";
 
 function App() {
-  // const [user, setUser] = useState("");
-
-  // useEffect(() => {
-  //   const getMe = async () => {
-  //     try {
-  //       const response = await axios.get("/api/users/me", {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       });
-  //       setUser(response.data);
-  //       console.log(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-
-  //   getMe();
-  // }, []);
-
   return (
     <Routes>
-      
       <Route path="/" element={<Home />} />
       <Route path="/experience" element={<Experience />} />
       <Route path="/doodleJump" element={<DoodleJumpGame />} />
       <Route path="/flappyBird" element={<FlappyBird />} />
       <Route path="/chromeDino" element={<ChromeDino />} />
       <Route path="/account" element={<Account />} />
-
 
       <Route path="/spaceInvader" element={<SpaceInvader />} />
     </Routes>
