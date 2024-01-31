@@ -8,14 +8,14 @@ import { City } from "../client/assets/City";
 import { CityCars } from "../client/assets/CityCars";
 
 const CityScene = () => {
-  const defaultPosition = [-16, -2, 0];
-  const trafficDefaultPosition = [26, -1.74, 0];
+  const defaultPosition = [-10, -2, 0];
+  const trafficDefaultPosition = [22, -1.74, 0];
   const [position, setPosition] = useState(defaultPosition);
   const [traffic, setTraffic] = useState(trafficDefaultPosition);
 
   // move car and camera along the x-axis on scroll
   const handleMouseScroll = (e) => {
-    let sensitivity = 0.02;
+    let sensitivity = 0.03;
     let currentPosition = position[0] + e.deltaY;
 
     // Update the car's position based on the mouse scroll

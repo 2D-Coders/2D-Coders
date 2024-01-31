@@ -110,10 +110,9 @@ const DoodleJumpGame = () => {
   let maxScore = 0;
   let gameOver = false;
 
-
   let disappearingPlatforms = [];
-let invisibleDuration = 5000; // 5 seconds in milliseconds
-let nextDisappearanceTime = 0;
+  let invisibleDuration = 5000; // 5 seconds in milliseconds
+  let nextDisappearanceTime = 0;
 
   useEffect(() => {
     if (gameStarted) {
@@ -121,7 +120,7 @@ let nextDisappearanceTime = 0;
       board.height = boardHeight;
       board.width = boardWidth;
       context = board.getContext("2d"); //used for drawing on the board
-    
+
       //draw doodler
       //load images
       doodlerRightImg = new Image();
@@ -137,13 +136,12 @@ let nextDisappearanceTime = 0;
         );
       };
 
-
       doodlerLeftImg = new Image();
       doodlerLeftImg.src = "./legendofJumpman/Untitled.png";
-    
+
       platformImg = new Image();
       platformImg.src = "./legendofJumpman/platform.png";
-    
+
       velocityY = initialVelocityY;
       placePlatform();
       requestAnimationFrame(update);
@@ -151,7 +149,6 @@ let nextDisappearanceTime = 0;
     }
     // console.log("gameStarted", gameStarted);
   }, [gameStarted]);
-
 
   function update() {
     requestAnimationFrame(update);
@@ -166,7 +163,7 @@ let nextDisappearanceTime = 0;
     } else if (doodler.x + doodler.width < 0) {
       doodler.x = boardWidth;
     }
-  
+
     velocityY += gravity;
     doodler.y += velocityY;
     if (doodler.y > board.height) {
@@ -179,15 +176,15 @@ let nextDisappearanceTime = 0;
       doodler.width,
       doodler.height
     );
-  
+
     //platforms
     for (let i = 0; i < platformArray.length; i++) {
       let platform = platformArray[i];
-  
+
       if (detectCollision(doodler, platform) && velocityY >= 0) {
         velocityY = initialVelocityY; //jump off platform
       }
-  
+
       // Only draw platform if visible
       if (platform.visible) {
         context.drawImage(
@@ -198,35 +195,35 @@ let nextDisappearanceTime = 0;
           platform.height
         );
       }
-  
+
       // Move the platform horizontally
       platform.x += platform.velocityX;
-  
+
       // Wrap the platform around the screen
       if (platform.x < -platform.width) {
         platform.x = boardWidth;
       } else if (platform.x > boardWidth) {
         platform.x = -platform.width;
       }
-  
+
       // Check if it's time to make platforms disappear
       if (platform.disappearingTime <= Date.now()) {
         platform.visible = false;
       }
     }
-  
+
     // Check if it's time to make platforms disappear
     if (Date.now() >= nextDisappearanceTime) {
       makePlatformsDisappear();
       nextDisappearanceTime = Date.now() + invisibleDuration;
     }
-  
+
     //score
     updateScore();
     context.fillStyle = "blue";
     context.font = "16px sans-serif";
     context.fillText(score, 5, 20);
-  
+
     if (gameOver) {
       context.fillText(
         "You lose. Hit space to restart!",
@@ -235,7 +232,7 @@ let nextDisappearanceTime = 0;
       );
     }
   }
-  
+
   function makePlatformsDisappear() {
     // Randomly select platforms to disappear
     disappearingPlatforms = [];
@@ -247,7 +244,7 @@ let nextDisappearanceTime = 0;
       disappearingPlatforms.push(platform);
     }
   }
-  
+
   function moveDoodler(e) {
     if (e.code == "ArrowRight" || e.code == "KeyD") {
       //move right
@@ -266,7 +263,7 @@ let nextDisappearanceTime = 0;
         width: doodlerWidth,
         height: doodlerHeight,
       };
-  
+
       velocityX = 0;
       velocityY = initialVelocityY;
       score = 0;
@@ -275,10 +272,10 @@ let nextDisappearanceTime = 0;
       placePlatform();
     }
   }
-  
+
   function placePlatform() {
     platformArray = [];
-  
+
     // Add one more platform at the bottom
     let bottomPlatform = {
       img: platformImg,
@@ -291,19 +288,19 @@ let nextDisappearanceTime = 0;
       visible: true, // Set the bottom platform as always visible
     };
     platformArray.push(bottomPlatform);
-  
+
     // Add other platforms with random positions and movements
     for (let i = 0; i < 6; i++) {
       let randomX = Math.floor((Math.random() * boardWidth * 3) / 4); //(0-1) * boardWidth*3/4
-  
+
       // Ensure the platform is within the visible area of the screen
       if (randomX + platformWidth > boardWidth) {
         randomX = boardWidth - platformWidth;
       }
-  
+
       let platformVelocityX = Math.random() > 0.5 ? 2 : -2; // Randomly choose direction
       let platformVelocityY = 0; // You can adjust the vertical movement if needed
-  
+
       let platform = {
         img: platformImg,
         x: randomX,
@@ -314,11 +311,11 @@ let nextDisappearanceTime = 0;
         velocityY: platformVelocityY,
         visible: true, // By default, platforms are visible
       };
-  
+
       platformArray.push(platform);
     }
   }
-  
+
   function detectCollision(a, b) {
     return (
       a.x < b.x + b.width && //a's top left corner doesnt reach b's top right corner
@@ -327,7 +324,7 @@ let nextDisappearanceTime = 0;
       a.y + a.height > b.y
     ); //a's bottom left corner passes b's top left corner
   }
-  
+
   function updateScore() {
     let points = Math.floor(50 * Math.random()); // (0-1) * 50 --> (0-50)
     if (velocityY < 0) {
@@ -346,7 +343,9 @@ let nextDisappearanceTime = 0;
 
   return (
     <section className="container-center center-vertical w-screen h-screen">
-      <h1 className="bg-orange p-4 rounded-lg mb-4 text-black">The Legend of Jumpman</h1>
+      <h1 className="bg-orange p-4 rounded-lg mb-4 text-black">
+        The Legend of Jumpman
+      </h1>
       <div className="m-8 relative px-12 py-28 rounded-lg" id="BG">
         <div className="flex items-center gap-20">
           <div className="bg-black w-96 h-96 p-6 rounded-lg">
@@ -361,16 +360,16 @@ let nextDisappearanceTime = 0;
             </ul>
           </div>
           {gameStarted && (
-  <canvas
-    id="board"
-    style={{
-      border: "1px solid #000",
-      display: "block",
-      margin: "0 auto",
-    }}
-    tabIndex="0"
-  ></canvas>
-)}
+            <canvas
+              id="board"
+              style={{
+                border: "1px solid #000",
+                display: "block",
+                margin: "0 auto",
+              }}
+              tabIndex="0"
+            ></canvas>
+          )}
           <section>
             {postHS ? (
               <div className="bg-white p-4 rounded-lg mb-4 text-black w-96">
