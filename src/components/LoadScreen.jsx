@@ -8,7 +8,7 @@ const LoadScreen = () => {
         backgroundColor: "white",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center", // Optional: Align vertically in the center
+        alignItems: "center",
       }}
       barStyles={{
         backgroundColor: "black",
