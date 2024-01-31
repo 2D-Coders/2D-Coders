@@ -9,7 +9,7 @@ const AllGames = () => {
         <section className="flex justify-center px-10 w-screen">
           <div
             id="flappyBg"
-            className="w-[30rem] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center "
+            className="w-[15rem] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
           >
             <Link to="/flappyBird">
               <div className="left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
@@ -20,10 +20,10 @@ const AllGames = () => {
 
           <div
             id="doodleBG"
-            className=" w-[30rem] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
+            className="w-[30rem] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
           >
             <Link to="/doodlejump">
-              <div className=" left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
+              <div className="left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
                 PLAY
               </div>
             </Link>
@@ -31,26 +31,39 @@ const AllGames = () => {
 
           <div
             id="chromeDino"
-            className=" w-[30rem] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
+            className="w-[30rem] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
           >
             <Link to="/chromeDino">
-              <div className=" left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
+              <div className="left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
                 PLAY
               </div>
             </Link>
           </div>
         </section>
 
-        {/* <div
-          id="spaceInvaderBody"
-          className=" w-[1000px] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
-        >
-          <Link to="/spaceInvader">
-            <div className=" left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
+        <div className="flex justify-center">
+          <div
+            id="spaceInvaderBody"
+            className="w-[500px] h-[700px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
+          >
+            <Link to="/spaceInvader">
+              <div className="left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
+                PLAY
+              </div>
+            </Link>
+          </div>
+
+          <div
+            id="jumpman"
+            className="w-[500px] h-[600px] bg-green-50 m-12 rounded-xl shadow-2xl relative flex justify-center items-center"
+          >
+            <Link to="/jumpman">
+            <div className="left-0 cursor-pointer bottom-0 absolute text-6xl bg-black w-full font-sans p-4 mb-4">
               PLAY
             </div>
-          </Link>
-        </div> */}
+            </Link>
+          </div>
+        </div>
 
         <ScrollToTop />
       </section>
@@ -59,5 +72,3 @@ const AllGames = () => {
 };
 
 export default AllGames;
-
-// have game div bounce on hover
