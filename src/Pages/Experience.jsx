@@ -6,20 +6,22 @@ import LoadScreen from "../components/LoadScreen";
 
 const Experience = () => {
   return (
-    <div className="w-screen h-screen relative flex justify-center items-center">
+    <>
       <LoadScreen />
-      <NavBar />
+      <div className="w-screen h-screen relative flex justify-center items-center">
+        <NavBar />
 
-      <div>
-        <AllGames />
+        <div>
+          <AllGames />
+        </div>
+        <div className="bottom-28 xl:bottom-48  absolute z-20">
+          <ScrollToBegin />
+        </div>
+        <div className="fixed -z-20">
+          <CityScene />
+        </div>
       </div>
-      <div className="bottom-28 xl:bottom-48  absolute z-20">
-        <ScrollToBegin />
-      </div>
-      <div className="fixed -z-20">
-        <CityScene />
-      </div>
-    </div>
+    </>
   );
 };
 
