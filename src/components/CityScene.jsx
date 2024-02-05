@@ -6,6 +6,7 @@ import { CityClouds } from "../client/assets/CityClouds";
 import { CityFarBG } from "../client/assets/CityFarBG";
 import { City } from "../client/assets/City";
 import { CityCars } from "../client/assets/CityCars";
+import LoadScreen from "./LoadScreen";
 
 const CityScene = () => {
   const defaultPosition = [-10, -2, 0];
