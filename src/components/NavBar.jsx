@@ -13,7 +13,7 @@ const NavBar = () => {
     <div className="top-0 w-screen fixed z-[600]  bg-white bg-opacity-80 text-black">
       <nav className="flex justify-between px-20 py-4 items-center">
         <Link to={"/experience"}>
-          <h2> GameZone</h2>
+          <h2>High Score</h2>
         </Link>
         <ul className="flex gap-6 items-center">
           {/* <li>
